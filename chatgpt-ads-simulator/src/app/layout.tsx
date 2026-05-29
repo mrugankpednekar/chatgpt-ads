@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "AdLab — ChatGPT Ads Platform",
+  title: "ContextAds — Launch and optimize ChatGPT Ads",
   description:
     "Launch and optimize ChatGPT Ads in minutes. AI-drafted campaigns, pre-spend simulation, one-click launch.",
 };

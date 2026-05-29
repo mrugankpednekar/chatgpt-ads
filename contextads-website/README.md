@@ -1,20 +1,7 @@
-# ContextAds — Marketing site
+# Deprecated
 
-Single-page landing matching the product demo: wordmark, two lines of copy, Sign in CTA.
+The marketing site has been merged into **`../chatgpt-ads-simulator/`**.
 
-Product app: `../chatgpt-ads-simulator/`
+Deploy only the simulator app. Production URL: **https://www.getcontextads.com** (once DNS is configured).
 
-## Development
-
-```bash
-npm install
-cp .env.example .env.local
-npm run dev
-```
-
-Runs on http://localhost:3001. Set `NEXT_PUBLIC_APP_URL` to the product app (default `http://localhost:3000`).
-
-## Deploy (Vercel)
-
-- **Root directory:** `contextads-website`
-- **Environment:** `NEXT_PUBLIC_APP_URL=https://app.yourdomain.com`
+This folder is kept for reference and can be removed later.

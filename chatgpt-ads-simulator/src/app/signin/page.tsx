@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
+import { Logo } from "@/components/marketing/logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -31,8 +32,8 @@ export default function SignInPage() {
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 px-4">
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
-          <Link href="/" className="text-sm font-semibold text-zinc-900">
-            AdLab
+          <Link href="/" className="inline-block">
+            <Logo className="text-lg" />
           </Link>
           <h1 className="mt-4 text-2xl font-semibold tracking-tight text-zinc-900">
             Sign in

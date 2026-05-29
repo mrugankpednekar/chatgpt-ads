@@ -111,3 +111,85 @@
     @apply font-mono text-2xl font-semibold tabular-nums tracking-tight text-zinc-900 sm:text-3xl;
   }
 }
+
+/* Marketing landing intro */
+@keyframes logo-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes logo-period-in {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.logo-part-context {
+  display: inline-block;
+  animation: logo-fade-up 0.5s ease-out both;
+}
+
+.logo-part-ads {
+  display: inline-block;
+  animation: logo-fade-up 0.5s ease-out 0.12s both;
+}
+
+.logo-period {
+  display: inline-block;
+  opacity: 0;
+}
+
+.logo-period-visible {
+  animation: logo-period-in 0.35s ease-out both;
+}
+
+.intro-logo-fixed {
+  position: fixed;
+  z-index: 30;
+  transition:
+    top 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    left 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.intro-backdrop-out {
+  animation: backdrop-out 0.6s ease-out forwards;
+}
+
+@keyframes backdrop-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-part-context,
+  .logo-part-ads,
+  .logo-period-visible {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .intro-logo-fixed {
+    position: static;
+    transform: none;
+    transition: none;
+  }
+
+  .intro-backdrop-out {
+    animation: none;
+    opacity: 0;
+  }
+}
