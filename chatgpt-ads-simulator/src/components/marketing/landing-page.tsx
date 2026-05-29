@@ -250,18 +250,8 @@ export function MarketingLandingPage() {
               </div>
               <div className="mt-5 flex items-start gap-3">
                 <div className="flex shrink-0 items-center gap-2.5 pt-0.5">
-                  <MarketingLogo
-                    id="mit"
-                    width={48}
-                    height={24}
-                    className="h-5 w-auto object-contain opacity-90"
-                  />
-                  <MarketingLogo
-                    id="balyasny"
-                    width={88}
-                    height={20}
-                    className="h-4 w-auto object-contain opacity-90"
-                  />
+                  <MarketingLogo id="mit" />
+                  <MarketingLogo id="balyasny" />
                 </div>
                 <p className="text-xs leading-relaxed text-zinc-500">
                   {TEAM_LINE}
@@ -310,12 +300,7 @@ export function MarketingLandingPage() {
                   {stat.body}
                 </p>
                 <div className="mt-4 flex items-center gap-2">
-                  <MarketingLogo
-                    id={stat.logoId}
-                    width={stat.logoId === "openai" ? 56 : 72}
-                    height={20}
-                    className="h-5 w-auto shrink-0 object-contain opacity-90"
-                  />
+                  <MarketingLogo id={stat.logoId} />
                   <p className="text-[11px] text-zinc-400">{stat.source}</p>
                 </div>
               </article>

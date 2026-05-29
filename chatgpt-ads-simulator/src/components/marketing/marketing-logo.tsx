@@ -10,29 +10,23 @@ import {
 
 type MarketingLogoProps = {
   id: MarketingLogoId;
-  width: number;
-  height: number;
   className?: string;
 };
 
-export function MarketingLogo({
-  id,
-  width,
-  height,
-  className = "",
-}: MarketingLogoProps) {
-  const { primary, fallback, alt } = MARKETING_LOGO_FILES[id];
-  const [src, setSrc] = useState<string>(primary);
+export function MarketingLogo({ id, className = "" }: MarketingLogoProps) {
+  const logo = MARKETING_LOGO_FILES[id];
+  const [src, setSrc] = useState<string>(logo.primary);
 
   return (
     <Image
       src={src}
-      alt={alt}
-      width={width}
-      height={height}
-      className={className}
+      alt={logo.alt}
+      width={logo.intrinsicWidth}
+      height={logo.intrinsicHeight}
+      unoptimized
+      className={`${logo.displayClassName} ${className}`.trim()}
       onError={() => {
-        if (src !== fallback) setSrc(fallback);
+        if (src !== logo.fallback) setSrc(logo.fallback);
       }}
     />
   );

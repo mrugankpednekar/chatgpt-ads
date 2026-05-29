@@ -1,6 +1,6 @@
 # Marketing logos
 
-Current files in use:
+Current files:
 
 | File | Used for |
 | --- | --- |
@@ -9,4 +9,12 @@ Current files in use:
 | `logo-colors-mit-red.png` | Hero team credibility row |
 | `Balyasny_Logo_RGB.svg` | Hero team credibility row |
 
-SVG fallbacks (`openai.svg`, `mit.svg`, `balyasny.svg`) are used only if the primary file fails to load.
+## If logos look blurry or faint
+
+1. **Prefer SVG** for wordmarks (Balyasny, Sensor Tower). SVG stays sharp at any size.
+2. **PNG exports:** transparent background, at least **512px wide**, saved as PNG (not JPEG).
+3. **Trim whitespace** around the mark before export. Large empty margins (common on MIT exports) make the logo render tiny.
+4. **OpenAI:** use the green/black wordmark on a transparent background. A white or gray-only logo will disappear on our light page background.
+5. **Replace files in this folder** using the same filenames above. No code changes needed after that.
+
+The site loads these files directly (no compression) for maximum sharpness.
