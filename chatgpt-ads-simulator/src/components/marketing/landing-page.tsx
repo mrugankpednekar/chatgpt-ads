@@ -34,53 +34,41 @@ const workflowSteps = [
   {
     num: "01",
     title: "Describe",
-    detail: "Campaign, budget, audience",
-    feature: "AI-drafted campaigns",
-    body: "One sentence in. Full campaign out: hints, creative, bids, structured for OpenAI.",
+    body: "One sentence in. AI drafts your campaign: hints, creative, bids.",
   },
   {
     num: "02",
     title: "Edit",
-    detail: "Hints and creative inline",
-    feature: "Refine before spend",
-    body: "Tune context hints, creative, and bids in one view. Nothing goes live until you approve it.",
+    body: "Tune hints and creative inline. Nothing goes live until you approve.",
   },
   {
     num: "03",
     title: "Simulate",
-    detail: "Predicted match rates",
-    feature: "Pre-spend simulation",
-    body: "Score hints against synthetic ChatGPT conversations before budget goes live.",
+    body: "Score hints against synthetic ChatGPT conversations before you spend.",
   },
   {
     num: "04",
     title: "Launch",
-    detail: "Push live to OpenAI",
-    feature: "One-click launch",
-    body: "Draft, validate, and push to OpenAI Ads in under a minute. Continuous optimization from real delivery data after launch.",
+    body: "Push to OpenAI Ads in one click. Optimize from real delivery after.",
   },
 ];
 
 const simulationPipeline = [
   {
-    step: "01",
-    title: "Persona generation",
-    body: "200+ realistic shoppers for your category: intent, budget, demographics.",
+    title: "Personas",
+    body: "200+ shoppers modeled on intent, budget, and demographics.",
   },
   {
-    step: "02",
-    title: "Conversation simulation",
-    body: "Multi-turn queries grounded in real model behavior, not templated text.",
+    title: "Conversations",
+    body: "Multi-turn queries from real model behavior, not templates.",
   },
   {
-    step: "03",
-    title: "Hint scoring",
-    body: "Relevance, intent, and fit scored against every conversation.",
+    title: "Scoring",
+    body: "Every hint rated on relevance, intent, and fit.",
   },
   {
-    step: "04",
     title: "Calibration",
-    body: "Predicted vs. actual after launch. Each campaign improves the next.",
+    body: "Predicted vs. actual after launch. Each run improves the next.",
   },
 ];
 
@@ -301,7 +289,7 @@ export function MarketingLandingPage() {
           </div>
         </section>
 
-        {/* How it works + simulation */}
+        {/* How it works */}
         <section className="border-t border-zinc-200 bg-white py-14">
           <div className="mx-auto max-w-7xl px-6">
             <div className="mb-10 text-center">
@@ -309,7 +297,7 @@ export function MarketingLandingPage() {
                 How it works
               </h2>
               <p className="mt-2 text-sm text-zinc-600">
-                From one sentence to live campaigns in four steps.
+                Four steps from brief to live campaign.
               </p>
             </div>
 
@@ -325,11 +313,7 @@ export function MarketingLandingPage() {
                       {step.num}
                     </div>
                     <p className="font-semibold text-zinc-900">{step.title}</p>
-                    <p className="mt-0.5 text-xs text-zinc-500">{step.detail}</p>
-                    <p className="mt-3 text-sm font-medium text-emerald-700">
-                      {step.feature}
-                    </p>
-                    <p className="mt-1.5 text-sm leading-relaxed text-zinc-600">
+                    <p className="mt-2 text-sm leading-relaxed text-zinc-600">
                       {step.body}
                     </p>
                   </article>
@@ -337,28 +321,26 @@ export function MarketingLandingPage() {
               </div>
             </div>
 
-            <div className="mt-8 rounded-xl border border-zinc-200 p-6">
-              <div className="mb-5 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-                <div>
-                  <h3 className="text-base font-semibold tracking-tight text-zinc-900">
-                    How simulation works
-                  </h3>
-                  <p className="mt-1 text-sm text-zinc-600">
-                    Agent simulation research from MIT. Not a black box.
-                  </p>
-                </div>
+            <div className="mt-8 rounded-xl border border-zinc-200 bg-zinc-50/50 p-6">
+              <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-sm text-zinc-600">
+                  <span className="font-medium text-zinc-900">
+                    Simulation engine
+                  </span>
+                  {" · "}
+                  MIT agent research, not a black box.
+                </p>
                 <Link
                   href="/methodology"
                   className="shrink-0 text-sm font-medium text-zinc-900 underline-offset-2 hover:underline"
                 >
-                  Read the full methodology →
+                  Full methodology →
                 </Link>
               </div>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 {simulationPipeline.map((item) => (
-                  <article key={item.step} className="rounded-lg bg-zinc-50 p-4">
-                    <p className="font-mono text-xs text-zinc-400">{item.step}</p>
-                    <h4 className="mt-1.5 text-sm font-semibold text-zinc-900">
+                  <article key={item.title} className="rounded-lg bg-white p-4">
+                    <h4 className="text-sm font-semibold text-zinc-900">
                       {item.title}
                     </h4>
                     <p className="mt-1.5 text-sm leading-relaxed text-zinc-600">
