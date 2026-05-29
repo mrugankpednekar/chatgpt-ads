@@ -22,6 +22,8 @@ type MarketingNavProps = {
   onIntroSettled?: () => void;
 };
 
+type HomePos = { top: number; left: number };
+
 export function MarketingNav({
   navLinksVisible = true,
   introPhase = "idle",
@@ -29,57 +31,69 @@ export function MarketingNav({
   showPeriod = true,
   onIntroSettled,
 }: MarketingNavProps) {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const centerTransformRef = useRef<string>("");
+  const slotRef = useRef<HTMLDivElement>(null);
   const settledRef = useRef(false);
-  const introActive = introPhase !== "idle" && introPhase !== "reveal";
+  const centerTransformRef = useRef("");
 
-  const [transform, setTransform] = useState<string | null>(
-    introPhase === "idle" || introPhase === "reveal" ? "none" : null,
-  );
-  const [transitionEnabled, setTransitionEnabled] = useState(false);
+  const introActive = introPhase !== "idle" && introPhase !== "reveal";
+  const [settled, setSettled] = useState(!introActive);
+  const [homePos, setHomePos] = useState<HomePos | null>(null);
+  const [flyTransform, setFlyTransform] = useState<string | null>(null);
+  const [flyTransition, setFlyTransition] = useState(false);
+
+  const measureHome = useCallback((): HomePos | null => {
+    const slot = slotRef.current;
+    if (!slot) return null;
+    const rect = slot.getBoundingClientRect();
+    return { top: Math.round(rect.top), left: Math.round(rect.left) };
+  }, []);
 
   const computeCenterTransform = useCallback(() => {
-    const el = wrapRef.current;
-    if (!el) return "none";
+    const slot = slotRef.current;
+    if (!slot) return "translate(0, 0) scale(1)";
 
-    const rect = el.getBoundingClientRect();
-    const cx = window.innerWidth / 2;
-    const cy = window.innerHeight / 2;
-    const ox = rect.left + rect.width / 2;
-    const oy = rect.top + rect.height / 2;
+    const rect = slot.getBoundingClientRect();
+    const dx = window.innerWidth / 2 - (rect.left + rect.width / 2);
+    const dy = window.innerHeight / 2 - (rect.top + rect.height / 2);
 
-    return `translate(${cx - ox}px, ${cy - oy}px) scale(${introScale})`;
+    return `translate(${dx}px, ${dy}px) scale(${introScale})`;
   }, [introScale]);
 
   useLayoutEffect(() => {
+    const home = measureHome();
+    if (home) setHomePos(home);
+  }, [measureHome]);
+
+  useLayoutEffect(() => {
     if (introPhase === "idle" || introPhase === "reveal") {
-      setTransitionEnabled(false);
-      setTransform("none");
+      setSettled(true);
+      setFlyTransform(null);
+      setFlyTransition(false);
       return;
     }
 
+    settledRef.current = false;
+    setSettled(false);
+
     if (introPhase === "intro" || introPhase === "pause") {
-      settledRef.current = false;
-      setTransitionEnabled(false);
       const center = computeCenterTransform();
       centerTransformRef.current = center;
-      setTransform(center);
+      setFlyTransition(false);
+      setFlyTransform(center);
       return;
     }
 
     if (introPhase === "move") {
-      settledRef.current = false;
-      setTransitionEnabled(false);
-      setTransform(centerTransformRef.current || computeCenterTransform());
-
-      const startMove = () => {
-        setTransitionEnabled(true);
-        setTransform("none");
-      };
+      const center = centerTransformRef.current || computeCenterTransform();
+      centerTransformRef.current = center;
+      setFlyTransition(false);
+      setFlyTransform(center);
 
       requestAnimationFrame(() => {
-        requestAnimationFrame(startMove);
+        requestAnimationFrame(() => {
+          setFlyTransition(true);
+          setFlyTransform("translate(0, 0) scale(1)");
+        });
       });
     }
   }, [introPhase, computeCenterTransform]);
@@ -90,53 +104,61 @@ export function MarketingNav({
     const fallback = window.setTimeout(() => {
       if (settledRef.current) return;
       settledRef.current = true;
-      setTransitionEnabled(false);
+      setFlyTransition(false);
+      setFlyTransform(null);
+      setSettled(true);
       onIntroSettled?.();
     }, 900);
 
     return () => window.clearTimeout(fallback);
   }, [introPhase, onIntroSettled]);
 
-  const handleTransitionEnd = (event: TransitionEvent<HTMLDivElement>) => {
+  const handleFlyEnd = (event: TransitionEvent<HTMLDivElement>) => {
     if (introPhase !== "move" || settledRef.current) return;
     if (event.propertyName !== "transform") return;
 
     settledRef.current = true;
-    setTransitionEnabled(false);
+    setFlyTransition(false);
+    setFlyTransform(null);
+    setSettled(true);
     onIntroSettled?.();
   };
 
-  const logoVisible = !introActive || transform !== null;
+  const showFlyer = introActive && homePos !== null && flyTransform !== null;
 
   return (
     <nav className="relative z-40 mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-      <div className="flex min-h-9 min-w-[8.5rem] items-center">
-        <div
-          ref={wrapRef}
-          className={`origin-center ${
-            introActive ? "relative z-50" : ""
-          } ${transitionEnabled ? "intro-logo-transform" : ""} ${
-            logoVisible ? "opacity-100" : "opacity-0"
-          }`}
-          style={{ transform: transform ?? "none" }}
-          onTransitionEnd={handleTransitionEnd}
-        >
-          <Link
-            href="/"
-            aria-label="ContextAds home"
-            tabIndex={introActive ? -1 : 0}
-          >
-            <Logo
-              className="text-lg sm:text-xl"
-              showPeriod={showPeriod}
-              animate={introPhase === "intro"}
-            />
+      <div ref={slotRef} className="flex min-h-9 min-w-[8.5rem] items-center">
+        <div className={settled ? "opacity-100" : "pointer-events-none opacity-0"}>
+          <Link href="/" aria-label="ContextAds home">
+            <Logo className="text-lg sm:text-xl" showPeriod={showPeriod} />
           </Link>
         </div>
       </div>
+
+      {showFlyer ? (
+        <div
+          className={`intro-logo-fly fixed z-50 origin-center ${
+            flyTransition ? "intro-logo-fly-active" : ""
+          }`}
+          style={{
+            top: homePos.top,
+            left: homePos.left,
+            transform: flyTransform,
+          }}
+          onTransitionEnd={handleFlyEnd}
+        >
+          <Logo
+            className="text-lg sm:text-xl"
+            showPeriod={showPeriod}
+            animate={introPhase === "intro"}
+          />
+        </div>
+      ) : null}
+
       <div
         className={`flex items-center gap-4 transition-opacity duration-500 sm:gap-6 ${
-          navLinksVisible && !introActive
+          navLinksVisible && settled
             ? "opacity-100"
             : "pointer-events-none opacity-0"
         }`}

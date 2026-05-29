@@ -154,6 +154,14 @@
   animation: logo-period-in 0.35s ease-out both;
 }
 
+.intro-logo-fly {
+  will-change: transform;
+}
+
+.intro-logo-fly-active {
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 .intro-logo-transform {
   will-change: transform;
   transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
