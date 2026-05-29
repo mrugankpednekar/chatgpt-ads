@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import {
+  useCallback,
   useLayoutEffect,
   useRef,
   useState,
@@ -14,69 +15,65 @@ import { BOOK_DEMO_URL } from "@/lib/marketing";
 export type IntroPhase = "intro" | "pause" | "move" | "reveal" | "idle";
 
 type MarketingNavProps = {
-  visible?: boolean;
+  navLinksVisible?: boolean;
   introPhase?: IntroPhase;
   introScale?: number;
   showPeriod?: boolean;
   onIntroSettled?: () => void;
 };
 
-type FlyStyle = {
-  top: string;
-  left: string;
-  transform: string;
-  origin: "center" | "top-left";
-};
-
-function centerFlyStyle(introScale: number): FlyStyle {
-  return {
-    top: "50%",
-    left: "50%",
-    transform: `translate(-50%, -50%) scale(${introScale})`,
-    origin: "center",
-  };
-}
-
 export function MarketingNav({
-  visible = true,
+  navLinksVisible = true,
   introPhase = "idle",
   introScale = 2.35,
   showPeriod = true,
   onIntroSettled,
 }: MarketingNavProps) {
-  const slotRef = useRef<HTMLDivElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
   const settledRef = useRef(false);
   const introActive = introPhase !== "idle" && introPhase !== "reveal";
-  const [isFlying, setIsFlying] = useState(introActive);
-  const [flyStyle, setFlyStyle] = useState<FlyStyle>(() =>
-    centerFlyStyle(introScale),
-  );
+
+  const [transform, setTransform] = useState("none");
+  const [transitionEnabled, setTransitionEnabled] = useState(false);
+  const [logoReady, setLogoReady] = useState(introPhase === "idle");
+
+  const computeCenterTransform = useCallback(() => {
+    const el = wrapRef.current;
+    if (!el) return "none";
+
+    const rect = el.getBoundingClientRect();
+    const cx = window.innerWidth / 2;
+    const cy = window.innerHeight / 2;
+    const ox = rect.left + rect.width / 2;
+    const oy = rect.top + rect.height / 2;
+
+    return `translate(${cx - ox}px, ${cy - oy}px) scale(${introScale})`;
+  }, [introScale]);
 
   useLayoutEffect(() => {
     if (introPhase === "idle" || introPhase === "reveal") {
-      setIsFlying(false);
+      setTransitionEnabled(false);
+      setTransform("none");
+      setLogoReady(true);
       return;
     }
 
     settledRef.current = false;
 
     if (introPhase === "intro" || introPhase === "pause") {
-      setIsFlying(true);
-      setFlyStyle(centerFlyStyle(introScale));
+      setTransitionEnabled(false);
+      setTransform(computeCenterTransform());
+      setLogoReady(true);
       return;
     }
 
-    if (introPhase === "move" && slotRef.current) {
-      const rect = slotRef.current.getBoundingClientRect();
-      setIsFlying(true);
-      setFlyStyle({
-        top: `${Math.round(rect.top)}px`,
-        left: `${Math.round(rect.left)}px`,
-        transform: "translate(0, 0) scale(1)",
-        origin: "top-left",
+    if (introPhase === "move") {
+      requestAnimationFrame(() => {
+        setTransitionEnabled(true);
+        setTransform("none");
       });
     }
-  }, [introPhase, introScale]);
+  }, [introPhase, computeCenterTransform]);
 
   useLayoutEffect(() => {
     if (introPhase !== "move") return;
@@ -84,8 +81,8 @@ export function MarketingNav({
     const fallback = window.setTimeout(() => {
       if (settledRef.current) return;
       settledRef.current = true;
-      setIsFlying(false);
-      requestAnimationFrame(() => onIntroSettled?.());
+      setTransitionEnabled(false);
+      onIntroSettled?.();
     }, 900);
 
     return () => window.clearTimeout(fallback);
@@ -96,45 +93,28 @@ export function MarketingNav({
     if (event.propertyName !== "transform") return;
 
     settledRef.current = true;
-    setIsFlying(false);
-    requestAnimationFrame(() => onIntroSettled?.());
+    setTransitionEnabled(false);
+    onIntroSettled?.();
   };
 
-  const flying = isFlying && introActive;
-
   return (
-    <nav
-      className={`relative z-40 mx-auto flex max-w-7xl items-center justify-between px-6 py-5 transition-opacity duration-500 ${
-        visible ? "opacity-100" : "pointer-events-none opacity-0"
-      }`}
-    >
-      <div
-        ref={slotRef}
-        className="flex min-h-9 min-w-[8.5rem] items-center"
-        aria-hidden={flying}
-      >
+    <nav className="relative z-40 mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+      <div className="flex min-h-9 min-w-[8.5rem] items-center">
         <div
-          className={
-            flying
-              ? `intro-logo-fixed z-30 ${
-                  flyStyle.origin === "center"
-                    ? "intro-logo-origin-center"
-                    : "intro-logo-origin-top-left"
-                }`
-              : undefined
-          }
-          style={
-            flying
-              ? {
-                  top: flyStyle.top,
-                  left: flyStyle.left,
-                  transform: flyStyle.transform,
-                }
-              : undefined
-          }
+          ref={wrapRef}
+          className={`origin-center ${
+            introActive ? "relative z-50" : ""
+          } ${transitionEnabled ? "intro-logo-transform" : ""} ${
+            logoReady || !introActive ? "opacity-100" : "opacity-0"
+          }`}
+          style={{ transform }}
           onTransitionEnd={handleTransitionEnd}
         >
-          <Link href="/" aria-label="ContextAds home" tabIndex={flying ? -1 : 0}>
+          <Link
+            href="/"
+            aria-label="ContextAds home"
+            tabIndex={introActive ? -1 : 0}
+          >
             <Logo
               className="text-lg sm:text-xl"
               showPeriod={showPeriod}
@@ -143,7 +123,13 @@ export function MarketingNav({
           </Link>
         </div>
       </div>
-      <div className="flex items-center gap-4 sm:gap-6">
+      <div
+        className={`flex items-center gap-4 transition-opacity duration-500 sm:gap-6 ${
+          navLinksVisible && !introActive
+            ? "opacity-100"
+            : "pointer-events-none opacity-0"
+        }`}
+      >
         <Link
           href="/about"
           className="hidden text-sm text-zinc-600 hover:text-zinc-900 sm:inline"

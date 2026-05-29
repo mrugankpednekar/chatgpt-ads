@@ -204,7 +204,7 @@ export function MarketingLandingPage() {
       ) : null}
 
       <MarketingNav
-        visible={showContent}
+        navLinksVisible={showContent}
         introPhase={navPhase}
         introScale={introScale}
         showPeriod={showPeriod}
@@ -220,9 +220,6 @@ export function MarketingLandingPage() {
         <section className="mx-auto max-w-7xl px-6 pb-14 pt-2 lg:pb-16">
           <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
             <div {...contentReveal(showContent)}>
-              <div className="mb-5 inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs text-emerald-700">
-                Beta
-              </div>
               <h1 className="text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl">
                 Launch and Optimize
                 <br />
@@ -242,12 +239,12 @@ export function MarketingLandingPage() {
                   Try the simulator →
                 </Link>
               </div>
-              <div className="mt-5 flex items-start gap-3">
-                <div className="flex shrink-0 items-center gap-2.5 pt-0.5">
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <div className="flex shrink-0 items-center gap-3">
                   <MarketingLogo id="mit" />
                   <MarketingLogo id="balyasny" />
                 </div>
-                <p className="text-xs leading-relaxed text-zinc-500">
+                <p className="text-xs leading-relaxed text-zinc-500 sm:border-l sm:border-zinc-200 sm:pl-4">
                   {TEAM_LINE}
                 </p>
               </div>
