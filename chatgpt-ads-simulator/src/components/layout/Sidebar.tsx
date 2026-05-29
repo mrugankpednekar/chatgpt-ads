@@ -18,6 +18,13 @@ export function Sidebar() {
   const router = useRouter();
   const user = useAppStore((s) => s.user);
   const brand = useAppStore((s) => s.brand);
+  const signOut = useAppStore((s) => s.signOut);
+
+  async function handleSignOut() {
+    await fetch("/api/auth/signout", { method: "POST" });
+    signOut();
+    router.push("/signin");
+  }
 
   return (
     <aside className="flex h-screen w-56 shrink-0 flex-col bg-zinc-900 text-zinc-100">
@@ -64,8 +71,15 @@ export function Sidebar() {
             <p className="truncate text-sm font-medium text-zinc-200">
               {user.name}
             </p>
-            <p className="truncate text-xs text-zinc-500">{user.role}</p>
+            <p className="truncate text-xs text-zinc-500">{user.email}</p>
           </div>
+          <button
+            type="button"
+            onClick={() => void handleSignOut()}
+            className="mt-1 w-full rounded-md px-3 py-2 text-left text-sm text-zinc-400 transition-colors hover:bg-zinc-800/60 hover:text-zinc-100"
+          >
+            Sign out
+          </button>
         </div>
       )}
     </aside>

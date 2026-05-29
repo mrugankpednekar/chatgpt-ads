@@ -5,7 +5,6 @@ import { persist } from "zustand/middleware";
 
 import {
   DEMO_BRAND,
-  DEMO_USER,
   createInitialCampaign,
   loadPrebakedDraft,
 } from "./demo-data";
@@ -31,9 +30,9 @@ interface AppState {
   brand: BrandProfile;
   campaigns: PlatformCampaign[];
 
-  signIn: (email: string) => void;
+  signIn: (user: DemoUser) => void;
   signOut: () => void;
-  skipToDemo: () => Promise<void>;
+  initializeWorkspace: () => Promise<void>;
 
   addCampaign: (campaign: PlatformCampaign) => void;
   updateCampaign: (
@@ -73,10 +72,10 @@ export const useAppStore = create<AppState>()(
       brand: DEMO_BRAND,
       campaigns: [],
 
-      signIn: () => {
+      signIn: (user) => {
         set({
           isAuthenticated: true,
-          user: DEMO_USER,
+          user,
           brand: DEMO_BRAND,
         });
       },
@@ -88,7 +87,8 @@ export const useAppStore = create<AppState>()(
         });
       },
 
-      skipToDemo: async () => {
+      initializeWorkspace: async () => {
+        if (get().campaigns.length > 0) return;
         const draft = await loadPrebakedDraft();
         const campaign = createInitialCampaign(draft);
         set({
