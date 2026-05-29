@@ -157,6 +157,8 @@
 .intro-logo-fixed {
   position: fixed;
   z-index: 30;
+  transform-origin: center center;
+  will-change: top, left, transform;
   transition:
     top 0.75s cubic-bezier(0.22, 1, 0.36, 1),
     left 0.75s cubic-bezier(0.22, 1, 0.36, 1),
@@ -216,6 +218,17 @@
   animation: sim-fade-in 0.5s ease-out both;
 }
 
-.sim-score-row {
-  animation: sim-fade-in 0.45s ease-out both;
+@keyframes preview-scroll-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.preview-convo-enter {
+  animation: preview-scroll-up 0.45s ease-out both;
 }

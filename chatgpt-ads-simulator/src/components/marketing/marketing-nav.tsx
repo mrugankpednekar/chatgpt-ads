@@ -9,14 +9,14 @@ import { BOOK_DEMO_URL } from "@/lib/marketing";
 type MarketingNavProps = {
   visible?: boolean;
   logoAnchorRef?: RefObject<HTMLDivElement | null>;
-  showNavLogo?: boolean;
+  logoHidden?: boolean;
   showPeriod?: boolean;
 };
 
 export function MarketingNav({
   visible = true,
   logoAnchorRef,
-  showNavLogo = true,
+  logoHidden = false,
   showPeriod = true,
 }: MarketingNavProps) {
   return (
@@ -25,12 +25,15 @@ export function MarketingNav({
         visible ? "opacity-100" : "pointer-events-none opacity-0"
       }`}
     >
-      <div ref={logoAnchorRef} className="flex min-h-9 min-w-[8.5rem] items-center">
-        {showNavLogo ? (
-          <Link href="/" aria-label="ContextAds home">
-            <Logo className="text-lg sm:text-xl" showPeriod={showPeriod} />
-          </Link>
-        ) : null}
+      <div
+        ref={logoAnchorRef}
+        className={`flex min-h-9 min-w-[8.5rem] items-center ${
+          logoHidden ? "invisible" : ""
+        }`}
+      >
+        <Link href="/" aria-label="ContextAds home">
+          <Logo className="text-lg sm:text-xl" showPeriod={showPeriod} />
+        </Link>
       </div>
       <div className="flex items-center gap-4 sm:gap-6">
         <Link

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import {
   useEffect,
@@ -21,9 +20,11 @@ import {
 import { FaqAccordion } from "@/components/marketing/faq-accordion";
 import { HeroProductPreview } from "@/components/marketing/hero-product-preview";
 import { Logo } from "@/components/marketing/logo";
+import { MarketingLogo } from "@/components/marketing/marketing-logo";
 import { MarketingFooter } from "@/components/marketing/marketing-footer";
 import { MarketingNav } from "@/components/marketing/marketing-nav";
 import { BOOK_DEMO_URL, CONTACT_EMAIL, TEAM_LINE } from "@/lib/marketing";
+import type { MarketingLogoId } from "@/lib/marketing-logos";
 
 const categories = [
   { icon: Sparkles, label: "Beauty & Skincare" },
@@ -53,30 +54,33 @@ const features = [
   },
 ];
 
-const marketStats = [
+const marketStats: {
+  value: string;
+  sub: string;
+  body: string;
+  source: string;
+  logoId: MarketingLogoId;
+}[] = [
   {
     value: "$100M ARR",
     sub: "in 6 weeks",
     body: "OpenAI's ChatGPT Ads pilot reached $100M annualized revenue within six weeks of its February 2026 launch.",
     source: "OpenAI, March 2026",
-    logo: "/logos/openai.svg",
-    logoAlt: "OpenAI",
+    logoId: "openai",
   },
   {
     value: "900M",
     sub: "weekly users",
     body: "Most US ChatGPT users are ad-eligible. Inventory is constrained, so optimization matters.",
     source: "OpenAI, Q1 2026",
-    logo: "/logos/openai.svg",
-    logoAlt: "OpenAI",
+    logoId: "openai",
   },
   {
     value: "44%",
     sub: "retail share",
     body: "Retail and grocery dominate early ChatGPT Ads impressions.",
     source: "Sensor Tower",
-    logo: "/logos/sensor-tower.svg",
-    logoAlt: "Sensor Tower",
+    logoId: "sensorTower",
   },
 ];
 
@@ -146,6 +150,11 @@ const CENTER_POS: FixedLogoPos = {
   y: "-50%",
 };
 
+function introScaleForViewport() {
+  if (typeof window === "undefined") return 2.35;
+  return window.matchMedia("(min-width: 640px)").matches ? 2.45 : 2.15;
+}
+
 function contentReveal(visible: boolean, delay = "0ms") {
   return {
     className: `transition-all duration-500 ease-out ${
@@ -167,6 +176,11 @@ export function MarketingLandingPage() {
   const [logoFixed, setLogoFixed] = useState(true);
   const [fixedPos, setFixedPos] = useState<FixedLogoPos>(CENTER_POS);
   const [backdropVisible, setBackdropVisible] = useState(true);
+  const [introScale, setIntroScale] = useState(2.35);
+
+  useEffect(() => {
+    setIntroScale(introScaleForViewport());
+  }, []);
 
   useEffect(() => {
     const reducedMotion = window.matchMedia(
@@ -220,16 +234,18 @@ export function MarketingLandingPage() {
 
   const handleLogoTransitionEnd = (event: TransitionEvent<HTMLDivElement>) => {
     if (phase !== "move" || settledRef.current) return;
-    if (event.propertyName !== "top") return;
+    if (event.propertyName !== "transform") return;
 
     settledRef.current = true;
-    setLogoFixed(false);
     setPhase("reveal");
+    setLogoFixed(false);
     requestAnimationFrame(() => setContentVisible(true));
   };
 
   const showBackdrop = backdropVisible && phase !== "reveal";
   const showContent = contentVisible;
+  const logoAtCenter = phase === "intro" || phase === "pause";
+  const logoScale = logoAtCenter ? introScale : 1;
 
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900">
@@ -248,14 +264,14 @@ export function MarketingLandingPage() {
           style={{
             top: fixedPos.top,
             left: fixedPos.left,
-            transform: `translate(${fixedPos.x}, ${fixedPos.y})`,
+            transform: `translate(${fixedPos.x}, ${fixedPos.y}) scale(${logoScale})`,
           }}
           onTransitionEnd={handleLogoTransitionEnd}
         >
           <Logo
-            className="text-4xl sm:text-5xl"
+            className="text-lg sm:text-xl"
             showPeriod={showPeriod}
-            animate={phase === "intro" || phase === "pause"}
+            animate={phase === "intro"}
           />
         </div>
       ) : null}
@@ -263,7 +279,7 @@ export function MarketingLandingPage() {
       <MarketingNav
         visible={showContent}
         logoAnchorRef={anchorRef}
-        showNavLogo={!logoFixed}
+        logoHidden={logoFixed}
         showPeriod={showPeriod}
       />
 
@@ -276,8 +292,7 @@ export function MarketingLandingPage() {
         <section className="mx-auto max-w-7xl px-6 pb-14 pt-2 lg:pb-16">
           <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
             <div {...contentReveal(showContent)}>
-              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs text-emerald-700">
-                <span className="size-1.5 animate-pulse rounded-full bg-emerald-500" />
+              <div className="mb-5 inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs text-emerald-700">
                 Beta
               </div>
               <h1 className="text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl">
@@ -305,13 +320,20 @@ export function MarketingLandingPage() {
                 </Link>
               </div>
               <div className="mt-5 flex items-start gap-3">
-                <Image
-                  src="/logos/mit.svg"
-                  alt="MIT"
-                  width={36}
-                  height={18}
-                  className="mt-0.5 shrink-0 opacity-80"
-                />
+                <div className="flex shrink-0 items-center gap-2.5 pt-0.5">
+                  <MarketingLogo
+                    id="mit"
+                    width={40}
+                    height={20}
+                    className="opacity-90"
+                  />
+                  <MarketingLogo
+                    id="balyasny"
+                    width={36}
+                    height={16}
+                    className="opacity-80"
+                  />
+                </div>
                 <p className="text-xs leading-relaxed text-zinc-500">
                   {TEAM_LINE}
                 </p>
@@ -359,12 +381,11 @@ export function MarketingLandingPage() {
                   {stat.body}
                 </p>
                 <div className="mt-4 flex items-center gap-2">
-                  <Image
-                    src={stat.logo}
-                    alt={stat.logoAlt}
+                  <MarketingLogo
+                    id={stat.logoId}
                     width={20}
                     height={20}
-                    className="shrink-0 opacity-70"
+                    className="shrink-0 opacity-80"
                   />
                   <p className="text-[11px] text-zinc-400">{stat.source}</p>
                 </div>
