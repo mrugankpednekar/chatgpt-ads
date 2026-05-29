@@ -10,9 +10,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "ContextAds | Launch and optimize ChatGPT Ads",
+  title: "ContextAds | Launch and Optimize ChatGPT Ads Instantly",
   description:
-    "Launch and optimize ChatGPT Ads in minutes. AI-drafted campaigns, pre-spend simulation, one-click launch.",
+    "Launch and Optimize ChatGPT Ads Instantly. AI-drafted campaigns, pre-spend simulation, one-click launch.",
 };
 
 export default function RootLayout({

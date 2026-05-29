@@ -20,7 +20,6 @@ import {
   type IntroPhase,
 } from "@/components/marketing/marketing-nav";
 import { BOOK_DEMO_URL, CONTACT_EMAIL, TEAM_LINE } from "@/lib/marketing";
-import type { MarketingLogoId } from "@/lib/marketing-logos";
 
 const categories = [
   { icon: Sparkles, label: "Beauty & Skincare" },
@@ -31,56 +30,38 @@ const categories = [
   { icon: UtensilsCrossed, label: "Food & Beverage" },
 ];
 
-const features = [
+const workflowSteps = [
   {
-    title: "AI-drafted campaigns",
+    num: "01",
+    title: "Describe",
+    detail: "Campaign, budget, audience",
+    feature: "AI-drafted campaigns",
     body: "One sentence in. Full campaign out: hints, creative, bids, structured for OpenAI.",
   },
   {
-    title: "Pre-spend simulation",
+    num: "02",
+    title: "Edit",
+    detail: "Hints and creative inline",
+    feature: "Refine before spend",
+    body: "Tune context hints, creative, and bids in one view. Nothing goes live until you approve it.",
+  },
+  {
+    num: "03",
+    title: "Simulate",
+    detail: "Predicted match rates",
+    feature: "Pre-spend simulation",
     body: "Score hints against synthetic ChatGPT conversations before budget goes live.",
   },
   {
-    title: "One-click launch",
-    body: "Draft, validate, and push to OpenAI Ads in under a minute.",
-  },
-  {
-    title: "Continuous optimization",
-    body: "Pause dead ads and shift budget to winners from real delivery data.",
-  },
-];
-
-const marketStats: {
-  value: string;
-  sub: string;
-  body: string;
-  source: string;
-  logoId: MarketingLogoId;
-}[] = [
-  {
-    value: "$100M ARR",
-    sub: "in 6 weeks",
-    body: "OpenAI's ChatGPT Ads pilot reached $100M annualized revenue within six weeks of its February 2026 launch.",
-    source: "OpenAI, March 2026",
-    logoId: "openai",
-  },
-  {
-    value: "900M",
-    sub: "weekly users",
-    body: "Most US ChatGPT users are ad-eligible. Inventory is constrained, so optimization matters.",
-    source: "OpenAI, Q1 2026",
-    logoId: "openai",
-  },
-  {
-    value: "44%",
-    sub: "retail share",
-    body: "Retail and grocery dominate early ChatGPT Ads impressions.",
-    source: "Sensor Tower",
-    logoId: "sensorTower",
+    num: "04",
+    title: "Launch",
+    detail: "Push live to OpenAI",
+    feature: "One-click launch",
+    body: "Draft, validate, and push to OpenAI Ads in under a minute. Continuous optimization from real delivery data after launch.",
   },
 ];
 
-const methodology = [
+const simulationPipeline = [
   {
     step: "01",
     title: "Persona generation",
@@ -100,6 +81,24 @@ const methodology = [
     step: "04",
     title: "Calibration",
     body: "Predicted vs. actual after launch. Each campaign improves the next.",
+  },
+];
+
+const marketStats = [
+  {
+    value: "$100M ARR",
+    sub: "in 6 weeks",
+    body: "ChatGPT Ads reached $100M annualized revenue within six weeks of its February 2026 launch.",
+  },
+  {
+    value: "900M",
+    sub: "weekly users",
+    body: "Most US ChatGPT users are ad-eligible. Inventory is constrained, so optimization matters.",
+  },
+  {
+    value: "44%",
+    sub: "retail share",
+    body: "Retail and grocery dominate early ChatGPT Ads impressions.",
   },
 ];
 
@@ -225,15 +224,10 @@ export function MarketingLandingPage() {
                 Beta
               </div>
               <h1 className="text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl">
-                Launch and optimize
+                Launch and Optimize
                 <br />
-                ChatGPT Ads in minutes
+                ChatGPT Ads Instantly
               </h1>
-              <p className="mt-5 max-w-lg text-base leading-relaxed text-zinc-600">
-                OpenAI opened Ads Manager to all US advertisers in May 2026. Most
-                brands lose first-month spend on context hints that never match.
-                We&apos;re the optimization layer.
-              </p>
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <a
                   href={BOOK_DEMO_URL}
@@ -299,107 +293,88 @@ export function MarketingLandingPage() {
                 <p className="mt-3 text-sm leading-relaxed text-zinc-600">
                   {stat.body}
                 </p>
-                <div className="mt-4 flex items-center gap-2">
-                  <MarketingLogo id={stat.logoId} />
-                  <p className="text-[11px] text-zinc-400">{stat.source}</p>
-                </div>
               </article>
             ))}
           </div>
-        </section>
-
-        {/* Features */}
-        <section className="border-t border-zinc-200 py-14">
-          <div className="mx-auto grid max-w-7xl gap-5 px-6 sm:grid-cols-2 lg:grid-cols-4">
-            {features.map((f) => (
-              <article
-                key={f.title}
-                className="rounded-xl border border-zinc-200 bg-white p-5"
-              >
-                <h2 className="font-semibold text-zinc-900">{f.title}</h2>
-                <p className="mt-2 text-sm leading-relaxed text-zinc-600">
-                  {f.body}
-                </p>
-              </article>
-            ))}
+          <div className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-3">
+            <div className="flex items-center gap-2.5">
+              <MarketingLogo id="openai" />
+              <p className="text-[11px] text-zinc-400">March 2026 · Q1 2026</p>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <MarketingLogo id="sensorTower" />
+              <p className="text-[11px] text-zinc-400">Q1 2026</p>
+            </div>
           </div>
         </section>
 
-        {/* How it works */}
-        <section className="border-t border-zinc-200 py-14">
+        {/* How it works + simulation */}
+        <section className="border-t border-zinc-200 bg-white py-14">
           <div className="mx-auto max-w-7xl px-6">
-            <h2 className="mb-10 text-center text-xl font-semibold tracking-tight">
-              How it works
-            </h2>
+            <div className="mb-10 text-center">
+              <h2 className="text-xl font-semibold tracking-tight">
+                How it works
+              </h2>
+              <p className="mt-2 text-sm text-zinc-600">
+                From one sentence to live campaigns in four steps.
+              </p>
+            </div>
+
             <div className="relative">
-              <div className="absolute left-[12%] right-[12%] top-6 hidden h-px bg-zinc-200 md:block" />
-              <div className="grid gap-8 md:grid-cols-4">
-                {[
-                  {
-                    num: "01",
-                    title: "Describe",
-                    body: "Campaign, budget, audience",
-                  },
-                  {
-                    num: "02",
-                    title: "Edit",
-                    body: "Hints and creative inline",
-                  },
-                  {
-                    num: "03",
-                    title: "Simulate",
-                    body: "Predicted match rates",
-                  },
-                  { num: "04", title: "Launch", body: "Push live to OpenAI" },
-                ].map((s) => (
-                  <div key={s.num} className="relative text-center">
-                    <div className="mx-auto mb-3 flex size-12 items-center justify-center rounded-full border border-zinc-200 bg-white text-sm font-semibold text-zinc-500">
-                      {s.num}
+              <div className="absolute left-[12%] right-[12%] top-6 hidden h-px bg-zinc-200 lg:block" />
+              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                {workflowSteps.map((step) => (
+                  <article
+                    key={step.num}
+                    className="relative rounded-xl border border-zinc-200 bg-zinc-50 p-5 text-left"
+                  >
+                    <div className="mb-4 flex size-12 items-center justify-center rounded-full border border-zinc-200 bg-white text-sm font-semibold text-zinc-500">
+                      {step.num}
                     </div>
-                    <p className="font-semibold text-zinc-900">{s.title}</p>
-                    <p className="mt-1 text-sm text-zinc-600">{s.body}</p>
-                  </div>
+                    <p className="font-semibold text-zinc-900">{step.title}</p>
+                    <p className="mt-0.5 text-xs text-zinc-500">{step.detail}</p>
+                    <p className="mt-3 text-sm font-medium text-emerald-700">
+                      {step.feature}
+                    </p>
+                    <p className="mt-1.5 text-sm leading-relaxed text-zinc-600">
+                      {step.body}
+                    </p>
+                  </article>
                 ))}
               </div>
             </div>
-          </div>
-        </section>
 
-        {/* Methodology */}
-        <section className="border-t border-zinc-200 bg-white py-14">
-          <div className="mx-auto max-w-7xl px-6">
-            <div className="mb-8 max-w-2xl">
-              <h2 className="text-xl font-semibold tracking-tight">
-                How the simulation works
-              </h2>
-              <p className="mt-2 text-sm text-zinc-600">
-                Agent simulation research from MIT. Not a black box.
-              </p>
-            </div>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {methodology.map((m) => (
-                <article
-                  key={m.step}
-                  className="rounded-xl border border-zinc-200 p-5"
-                >
-                  <p className="font-mono text-xs text-zinc-400">{m.step}</p>
-                  <h3 className="mt-2 font-semibold text-zinc-900">
-                    {m.title}
+            <div className="mt-8 rounded-xl border border-zinc-200 p-6">
+              <div className="mb-5 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <h3 className="text-base font-semibold tracking-tight text-zinc-900">
+                    How simulation works
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-zinc-600">
-                    {m.body}
+                  <p className="mt-1 text-sm text-zinc-600">
+                    Agent simulation research from MIT. Not a black box.
                   </p>
-                </article>
-              ))}
+                </div>
+                <Link
+                  href="/methodology"
+                  className="shrink-0 text-sm font-medium text-zinc-900 underline-offset-2 hover:underline"
+                >
+                  Read the full methodology →
+                </Link>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {simulationPipeline.map((item) => (
+                  <article key={item.step} className="rounded-lg bg-zinc-50 p-4">
+                    <p className="font-mono text-xs text-zinc-400">{item.step}</p>
+                    <h4 className="mt-1.5 text-sm font-semibold text-zinc-900">
+                      {item.title}
+                    </h4>
+                    <p className="mt-1.5 text-sm leading-relaxed text-zinc-600">
+                      {item.body}
+                    </p>
+                  </article>
+                ))}
+              </div>
             </div>
-            <p className="mt-6 text-sm">
-              <Link
-                href="/methodology"
-                className="font-medium text-zinc-900 underline-offset-2 hover:underline"
-              >
-                Read the full methodology →
-              </Link>
-            </p>
           </div>
         </section>
 
