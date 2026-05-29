@@ -13,7 +13,7 @@ export default function MethodologyPage() {
         <div className="mt-8 space-y-6 text-sm leading-relaxed text-zinc-600">
           <p>
             ContextAds scores context hints before spend using synthetic ChatGPT
-            conversations generated from category-specific personas — intent
+            conversations generated from category-specific personas: intent
             stage, demographics, and budget sensitivity included.
           </p>
           <p>

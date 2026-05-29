@@ -17,7 +17,7 @@ const PREVIEW_SETS: PreviewSet[] = [
     conversations: [
       "Best skincare for combo skin teens under $25?",
       "Alternatives to CeraVe that won't break out sensitive skin",
-      "How do I treat hyperpigmentation gently — I'm 19",
+      "How do I treat hyperpigmentation gently? I'm 19",
       "Cheap skincare routine for college student",
       "Best Gen Z skincare brands recommended by dermatologists",
     ],

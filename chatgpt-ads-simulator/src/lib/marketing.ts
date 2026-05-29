@@ -4,11 +4,5 @@ export const BOOK_DEMO_URL =
 
 export const CONTACT_EMAIL = "hi@getcontextads.com";
 
-export const FOUNDER = {
-  name: "Mrugank Pednekar",
-  role: "Founder",
-  line: "MIT researcher on AI ad performance. Previously Wayward and Balyasny.",
-  linkedin: "https://linkedin.com/in/mrugankpednekar",
-  github: "https://github.com/mrugankpednekar",
-  site: "https://mrugank.net",
-} as const;
+export const TEAM_LINE =
+  "Built by a team of engineers, marketers, and AI researchers from MIT, Balyasny Asset Management, and a $2B+ GMV AdTech startup.";
