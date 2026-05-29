@@ -125,7 +125,7 @@ const faqs = [
   },
   {
     q: "Can I try without a call?",
-    a: "Beta partners get a free first-campaign simulation. Book a demo for access.",
+    a: "Design partner plans start at $199/mo. Book a demo for access.",
   },
 ];
 
@@ -377,7 +377,7 @@ export function MarketingLandingPage() {
             <div className="mb-8 text-center">
               <h2 className="text-xl font-semibold tracking-tight">Pricing</h2>
               <p className="mt-2 text-sm text-zinc-600">
-                Beta. Free first-campaign simulation for early partners.
+                Beta pricing for early partners.
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-2">
@@ -385,7 +385,10 @@ export function MarketingLandingPage() {
                 <p className="text-xs font-medium uppercase tracking-wider text-zinc-500">
                   Design partner
                 </p>
-                <p className="mt-2 text-3xl font-semibold">Free</p>
+                <p className="mt-2 text-3xl font-semibold">
+                  $199
+                  <span className="text-base font-normal text-zinc-500">/mo</span>
+                </p>
                 <p className="text-sm text-zinc-600">First campaign simulation</p>
                 <ul className="mt-5 flex-1 space-y-2 text-sm text-zinc-700">
                   <li>Full draft + simulation</li>
