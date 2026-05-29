@@ -1,13 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-  type TransitionEvent,
-} from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Cpu,
   Heart,
@@ -19,10 +13,12 @@ import {
 
 import { FaqAccordion } from "@/components/marketing/faq-accordion";
 import { HeroProductPreview } from "@/components/marketing/hero-product-preview";
-import { Logo } from "@/components/marketing/logo";
 import { MarketingLogo } from "@/components/marketing/marketing-logo";
 import { MarketingFooter } from "@/components/marketing/marketing-footer";
-import { MarketingNav } from "@/components/marketing/marketing-nav";
+import {
+  MarketingNav,
+  type IntroPhase,
+} from "@/components/marketing/marketing-nav";
 import { BOOK_DEMO_URL, CONTACT_EMAIL, TEAM_LINE } from "@/lib/marketing";
 import type { MarketingLogoId } from "@/lib/marketing-logos";
 
@@ -134,21 +130,7 @@ const faqs = [
   },
 ];
 
-type Phase = "intro" | "pause" | "move" | "reveal";
-
-type FixedLogoPos = {
-  top: string;
-  left: string;
-  x: string;
-  y: string;
-};
-
-const CENTER_POS: FixedLogoPos = {
-  top: "50%",
-  left: "50%",
-  x: "-50%",
-  y: "-50%",
-};
+type Phase = IntroPhase;
 
 function introScaleForViewport() {
   if (typeof window === "undefined") return 2.35;
@@ -167,16 +149,16 @@ function contentReveal(visible: boolean, delay = "0ms") {
 }
 
 export function MarketingLandingPage() {
-  const anchorRef = useRef<HTMLDivElement>(null);
-  const settledRef = useRef(false);
-
   const [phase, setPhase] = useState<Phase>("intro");
   const [showPeriod, setShowPeriod] = useState(false);
   const [contentVisible, setContentVisible] = useState(false);
-  const [logoFixed, setLogoFixed] = useState(true);
-  const [fixedPos, setFixedPos] = useState<FixedLogoPos>(CENTER_POS);
   const [backdropVisible, setBackdropVisible] = useState(true);
   const [introScale, setIntroScale] = useState(2.35);
+
+  const handleIntroSettled = useCallback(() => {
+    setPhase("reveal");
+    setContentVisible(true);
+  }, []);
 
   useEffect(() => {
     setIntroScale(introScaleForViewport());
@@ -189,9 +171,8 @@ export function MarketingLandingPage() {
 
     if (reducedMotion) {
       setShowPeriod(true);
-      setPhase("reveal");
+      setPhase("idle");
       setContentVisible(true);
-      setLogoFixed(false);
       setBackdropVisible(false);
       return;
     }
@@ -199,53 +180,18 @@ export function MarketingLandingPage() {
     const timers = [
       setTimeout(() => setShowPeriod(true), 650),
       setTimeout(() => setPhase("pause"), 1300),
-      setTimeout(() => setPhase("move"), 2100),
+      setTimeout(() => {
+        setPhase("move");
+        setBackdropVisible(false);
+      }, 2100),
     ];
 
     return () => timers.forEach(clearTimeout);
   }, []);
 
-  useLayoutEffect(() => {
-    if (phase !== "move" || !anchorRef.current) return;
-
-    const rect = anchorRef.current.getBoundingClientRect();
-    setFixedPos({
-      top: `${rect.top}px`,
-      left: `${rect.left + rect.width / 2}px`,
-      x: "-50%",
-      y: "0",
-    });
-    setBackdropVisible(false);
-  }, [phase]);
-
-  useEffect(() => {
-    if (phase !== "move") return;
-
-    const fallback = setTimeout(() => {
-      if (settledRef.current) return;
-      settledRef.current = true;
-      setLogoFixed(false);
-      setPhase("reveal");
-      requestAnimationFrame(() => setContentVisible(true));
-    }, 850);
-
-    return () => clearTimeout(fallback);
-  }, [phase]);
-
-  const handleLogoTransitionEnd = (event: TransitionEvent<HTMLDivElement>) => {
-    if (phase !== "move" || settledRef.current) return;
-    if (event.propertyName !== "transform") return;
-
-    settledRef.current = true;
-    setPhase("reveal");
-    setLogoFixed(false);
-    requestAnimationFrame(() => setContentVisible(true));
-  };
-
-  const showBackdrop = backdropVisible && phase !== "reveal";
+  const showBackdrop = backdropVisible && phase !== "reveal" && phase !== "idle";
   const showContent = contentVisible;
-  const logoAtCenter = phase === "intro" || phase === "pause";
-  const logoScale = logoAtCenter ? introScale : 1;
+  const navPhase: Phase = phase === "reveal" ? "idle" : phase;
 
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900">
@@ -258,29 +204,12 @@ export function MarketingLandingPage() {
         />
       ) : null}
 
-      {logoFixed ? (
-        <div
-          className="intro-logo-fixed z-30"
-          style={{
-            top: fixedPos.top,
-            left: fixedPos.left,
-            transform: `translate(${fixedPos.x}, ${fixedPos.y}) scale(${logoScale})`,
-          }}
-          onTransitionEnd={handleLogoTransitionEnd}
-        >
-          <Logo
-            className="text-lg sm:text-xl"
-            showPeriod={showPeriod}
-            animate={phase === "intro"}
-          />
-        </div>
-      ) : null}
-
       <MarketingNav
         visible={showContent}
-        logoAnchorRef={anchorRef}
-        logoHidden={logoFixed}
+        introPhase={navPhase}
+        introScale={introScale}
         showPeriod={showPeriod}
+        onIntroSettled={handleIntroSettled}
       />
 
       <div
@@ -323,15 +252,15 @@ export function MarketingLandingPage() {
                 <div className="flex shrink-0 items-center gap-2.5 pt-0.5">
                   <MarketingLogo
                     id="mit"
-                    width={40}
-                    height={20}
-                    className="opacity-90"
+                    width={48}
+                    height={24}
+                    className="h-5 w-auto object-contain opacity-90"
                   />
                   <MarketingLogo
                     id="balyasny"
-                    width={36}
-                    height={16}
-                    className="opacity-80"
+                    width={88}
+                    height={20}
+                    className="h-4 w-auto object-contain opacity-90"
                   />
                 </div>
                 <p className="text-xs leading-relaxed text-zinc-500">
@@ -383,9 +312,9 @@ export function MarketingLandingPage() {
                 <div className="mt-4 flex items-center gap-2">
                   <MarketingLogo
                     id={stat.logoId}
-                    width={20}
+                    width={stat.logoId === "openai" ? 56 : 72}
                     height={20}
-                    className="shrink-0 opacity-80"
+                    className="h-5 w-auto shrink-0 object-contain opacity-90"
                   />
                   <p className="text-[11px] text-zinc-400">{stat.source}</p>
                 </div>

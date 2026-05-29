@@ -1,25 +1,25 @@
 /**
- * Drop logo files into public/logos/ using these exact filenames.
- * PNG or SVG both work. PNG is preferred for photographic marks.
+ * Logo assets live in public/logos/.
+ * Update primary paths when new brand files are added.
  */
 export const MARKETING_LOGO_FILES = {
   openai: {
-    primary: "/logos/openai.png",
+    primary: "/logos/OpenAI_Logo.svg.png",
     fallback: "/logos/openai.svg",
     alt: "OpenAI",
   },
   sensorTower: {
-    primary: "/logos/sensor-tower.png",
-    fallback: "/logos/sensor-tower.svg",
+    primary: "/logos/5b18bcefcf2cd7a3b7bf0c8dc110.png",
+    fallback: "/logos/5b18bcefcf2cd7a3b7bf0c8dc110.png",
     alt: "Sensor Tower",
   },
   mit: {
-    primary: "/logos/mit.png",
+    primary: "/logos/logo-colors-mit-red.png",
     fallback: "/logos/mit.svg",
     alt: "MIT",
   },
   balyasny: {
-    primary: "/logos/balyasny.png",
+    primary: "/logos/Balyasny_Logo_RGB.svg",
     fallback: "/logos/balyasny.svg",
     alt: "Balyasny Asset Management",
   },

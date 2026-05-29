@@ -1,15 +1,12 @@
 # Marketing logos
 
-Upload these files into this folder (`chatgpt-ads-simulator/public/logos/`).
+Current files in use:
 
-| Filename | Used for | Notes |
-| --- | --- | --- |
-| `openai.png` | Market stat cards citing OpenAI | Square or horizontal, transparent background, min ~128px wide |
-| `sensor-tower.png` | Market stat card citing Sensor Tower | Same as above |
-| `mit.png` | Hero team credibility row | MIT wordmark or logo lockup |
-| `balyasny.png` | Hero team credibility row (optional) | Balyasny Asset Management mark |
-| `balyasny.svg` | Fallback if no PNG | Optional |
+| File | Used for |
+| --- | --- |
+| `OpenAI_Logo.svg.png` | Market stat cards (OpenAI) |
+| `5b18bcefcf2cd7a3b7bf0c8dc110.png` | Market stat card (Sensor Tower) |
+| `logo-colors-mit-red.png` | Hero team credibility row |
+| `Balyasny_Logo_RGB.svg` | Hero team credibility row |
 
-SVG fallbacks already exist for OpenAI, Sensor Tower, and MIT. Once you upload PNGs with the names above, the site will use them automatically.
-
-Recommended format: PNG with transparent background, 128–256px on the longest side.
+SVG fallbacks (`openai.svg`, `mit.svg`, `balyasny.svg`) are used only if the primary file fails to load.

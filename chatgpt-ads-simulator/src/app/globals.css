@@ -157,12 +157,19 @@
 .intro-logo-fixed {
   position: fixed;
   z-index: 30;
-  transform-origin: center center;
   will-change: top, left, transform;
   transition:
     top 0.75s cubic-bezier(0.22, 1, 0.36, 1),
     left 0.75s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.intro-logo-origin-center {
+  transform-origin: center center;
+}
+
+.intro-logo-origin-top-left {
+  transform-origin: top left;
 }
 
 .intro-backdrop-out {
