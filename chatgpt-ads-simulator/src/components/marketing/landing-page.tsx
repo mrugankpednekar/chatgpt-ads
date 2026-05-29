@@ -1,381 +1,399 @@
-"use client";
-
 import Link from "next/link";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  Cpu,
+  Heart,
+  Home,
+  Shirt,
+  Sparkles,
+  UtensilsCrossed,
+} from "lucide-react";
 
-import { Logo } from "@/components/marketing/logo";
-import { SimulationPreview } from "@/components/marketing/simulation-preview";
-import { SiteFooter } from "@/components/marketing/site-footer";
-import { SiteHeader } from "@/components/marketing/site-header";
-import { BOOK_DEMO_URL } from "@/lib/marketing";
+import { HeroProductPreview } from "@/components/marketing/hero-product-preview";
+import { MarketingFooter } from "@/components/marketing/marketing-footer";
+import { MarketingNav } from "@/components/marketing/marketing-nav";
+import { BOOK_DEMO_URL, CONTACT_EMAIL, FOUNDER } from "@/lib/marketing";
 
-const capabilities = [
+const categories = [
+  { icon: Sparkles, label: "Beauty & Skincare" },
+  { icon: Heart, label: "Supplements" },
+  { icon: Shirt, label: "DTC Fashion" },
+  { icon: Home, label: "Home & Lifestyle" },
+  { icon: Cpu, label: "B2B SaaS" },
+  { icon: UtensilsCrossed, label: "Food & Beverage" },
+];
+
+const features = [
   {
     title: "AI-drafted campaigns",
-    body: "Type one sentence about your product. Get a full campaign — context hints, creative variants, and bid structure — aligned to OpenAI's best practices.",
+    body: "One sentence in. Full campaign out — hints, creative, bids — structured for OpenAI.",
   },
   {
     title: "Pre-spend simulation",
-    body: "We simulate your campaign across hundreds of synthetic ChatGPT conversations to predict which context hints will deliver impressions — before you spend a dollar.",
+    body: "Score hints against synthetic ChatGPT conversations before budget goes live.",
   },
   {
     title: "One-click launch",
-    body: "Skip the manual setup in Ads Manager. Describe your campaign, we draft and validate, and push to OpenAI Ads in under a minute.",
+    body: "Draft, validate, and push to OpenAI Ads in under a minute.",
   },
   {
     title: "Continuous optimization",
-    body: "Pause dead ads, shift budget toward winners, and recalibrate from real performance — without living in a spreadsheet.",
+    body: "Pause dead ads and shift budget to winners from real delivery data.",
   },
 ];
 
-const steps = [
-  { label: "Describe", detail: "Campaign, budget, audience" },
-  { label: "Edit", detail: "Hints and creative inline" },
-  { label: "Simulate", detail: "See predicted match rates" },
-  { label: "Launch", detail: "Push live to OpenAI" },
-];
-
-const pricing = [
+const marketStats = [
   {
-    name: "Design partner",
-    price: "Free",
-    period: "first campaign",
-    note: "In closed beta with select brands",
-    includes:
-      "Full draft + simulation for your first campaign. Apply for early access.",
-    cta: "Book a demo",
-    href: BOOK_DEMO_URL,
-    primary: true,
+    value: "$100M ARR",
+    sub: "in 6 weeks",
+    body: "OpenAI's ChatGPT Ads pilot reached $100M annualized revenue within six weeks of its February 2026 launch.",
+    source: "OpenAI, March 2026",
   },
   {
-    name: "Growth",
-    price: "$599",
-    period: "/mo",
-    note: "3 workspaces · up to $50K/mo spend",
-    includes:
-      "Unlimited simulations and optimization. Most brands recoup the fee by avoiding wasted spend on dead hints in month one.",
-    cta: "Book a demo",
-    href: BOOK_DEMO_URL,
-    primary: false,
+    value: "900M",
+    sub: "weekly users",
+    body: "Most US ChatGPT users are ad-eligible. Inventory is constrained — optimization matters.",
+    source: "OpenAI, Q1 2026",
+  },
+  {
+    value: "44%",
+    sub: "retail share",
+    body: "Retail and grocery dominate early ChatGPT Ads impressions.",
+    source: "Sensor Tower",
+  },
+];
+
+const methodology = [
+  {
+    step: "01",
+    title: "Persona generation",
+    body: "200+ realistic shoppers for your category — intent, budget, demographics.",
+  },
+  {
+    step: "02",
+    title: "Conversation simulation",
+    body: "Multi-turn queries grounded in real model behavior, not templated text.",
+  },
+  {
+    step: "03",
+    title: "Hint scoring",
+    body: "Relevance, intent, and fit scored against every conversation.",
+  },
+  {
+    step: "04",
+    title: "Calibration",
+    body: "Predicted vs. actual after launch. Each campaign improves the next.",
   },
 ];
 
 const faqs = [
   {
-    q: "Do I need an existing OpenAI Ads account?",
-    a: "Yes. ContextAds connects to your OpenAI Ads API key. We draft, simulate, and launch on your behalf — you keep ownership of the account and spend.",
+    q: "Do I need an OpenAI Ads account?",
+    a: "Yes. You connect your API key. We draft and launch on your account — you keep spend and ownership.",
   },
   {
-    q: "How accurate are your predictions?",
-    a: "Simulations score context hints against synthetic conversations modeled on OpenAI's auction signals. We show predicted match rates and intent quality so you can edit before spend — then compare predicted vs. actual after launch.",
+    q: "How accurate are predictions?",
+    a: "We score hints against synthetic conversations modeled on OpenAI's auction signals. You edit before spend, then compare predicted vs. actual after launch.",
   },
   {
     q: "What if OpenAI rejects my campaign?",
-    a: "We run preflight checks on character limits, creative specs, and landing pages before anything is submitted. You review and edit every field before launch.",
+    a: "Preflight checks on specs and landing pages run before submission. You approve every field.",
   },
   {
-    q: "Do you see my ChatGPT conversation data?",
-    a: "No. We generate synthetic conversations for simulation and use your Ads API for launch and reporting. We do not access end-user ChatGPT chats.",
+    q: "Do you see ChatGPT conversation data?",
+    a: "No. Simulations are synthetic. We only use your Ads API for launch and reporting.",
   },
   {
-    q: "What categories does this work for?",
-    a: "Built for mid-market DTC — skincare, supplements, fashion, and SaaS — anywhere context hints and creative quality drive ChatGPT Ads performance.",
+    q: "Who is this for?",
+    a: "Mid-market DTC and agencies running ChatGPT Ads — skincare, supplements, fashion, SaaS.",
   },
   {
-    q: "Can I try it without a sales call?",
-    a: "Design partners get a free first-campaign simulation. Book a demo and we'll set up access — or sign in if you already have an account.",
+    q: "Can I try without a call?",
+    a: "Design partners get a free first-campaign simulation. Book a demo for access.",
   },
 ];
 
-type Phase = "intro" | "pause" | "move" | "reveal";
-
-type FixedLogoPos = {
-  top: string;
-  left: string;
-  x: string;
-  y: string;
-};
-
-const CENTER_POS: FixedLogoPos = {
-  top: "50%",
-  left: "50%",
-  x: "-50%",
-  y: "-50%",
-};
-
 export function MarketingLandingPage() {
-  const anchorRef = useRef<HTMLDivElement>(null);
-  const settledRef = useRef(false);
-
-  const [phase, setPhase] = useState<Phase>("intro");
-  const [showPeriod, setShowPeriod] = useState(false);
-  const [contentVisible, setContentVisible] = useState(false);
-  const [logoFixed, setLogoFixed] = useState(true);
-  const [fixedPos, setFixedPos] = useState<FixedLogoPos>(CENTER_POS);
-  const [backdropVisible, setBackdropVisible] = useState(true);
-
-  useEffect(() => {
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    if (reducedMotion) {
-      setShowPeriod(true);
-      setPhase("reveal");
-      setContentVisible(true);
-      setLogoFixed(false);
-      setBackdropVisible(false);
-      return;
-    }
-
-    const timers = [
-      setTimeout(() => setShowPeriod(true), 650),
-      setTimeout(() => setPhase("pause"), 1300),
-      setTimeout(() => setPhase("move"), 2100),
-    ];
-
-    return () => timers.forEach(clearTimeout);
-  }, []);
-
-  useLayoutEffect(() => {
-    if (phase !== "move" || !anchorRef.current) return;
-
-    const rect = anchorRef.current.getBoundingClientRect();
-    setFixedPos({
-      top: `${rect.top}px`,
-      left: `${rect.left + rect.width / 2}px`,
-      x: "-50%",
-      y: "0",
-    });
-    setBackdropVisible(false);
-  }, [phase]);
-
-  useEffect(() => {
-    if (phase !== "move") return;
-
-    const fallback = setTimeout(() => {
-      if (settledRef.current) return;
-      settledRef.current = true;
-      setLogoFixed(false);
-      setPhase("reveal");
-      requestAnimationFrame(() => setContentVisible(true));
-    }, 850);
-
-    return () => clearTimeout(fallback);
-  }, [phase]);
-
-  const handleLogoTransitionEnd = (
-    event: React.TransitionEvent<HTMLDivElement>,
-  ) => {
-    if (phase !== "move" || settledRef.current) return;
-    if (event.propertyName !== "top") return;
-
-    settledRef.current = true;
-    setLogoFixed(false);
-    setPhase("reveal");
-    requestAnimationFrame(() => setContentVisible(true));
-  };
-
-  const showBackdrop = backdropVisible && phase !== "reveal";
-  const showContent = contentVisible;
-
   return (
-    <div className="min-h-screen bg-zinc-50">
-      <SiteHeader visible={showContent} />
+    <div className="min-h-screen bg-zinc-50 text-zinc-900">
+      <MarketingNav />
 
-      {showBackdrop ? (
-        <div
-          className={`intro-backdrop fixed inset-0 z-10 bg-zinc-50 ${
-            phase === "move" ? "intro-backdrop-out" : ""
-          }`}
-          aria-hidden
-        />
-      ) : null}
-
-      <section className="relative z-20 flex flex-col items-center px-6 pb-12 pt-20 text-center sm:pb-16 sm:pt-28">
-        <div
-          ref={anchorRef}
-          className="flex min-h-10 w-full justify-center sm:min-h-12"
-        >
-          <div
-            className={logoFixed ? "intro-logo-fixed" : undefined}
-            style={
-              logoFixed
-                ? {
-                    top: fixedPos.top,
-                    left: fixedPos.left,
-                    transform: `translate(${fixedPos.x}, ${fixedPos.y})`,
-                  }
-                : undefined
-            }
-            onTransitionEnd={handleLogoTransitionEnd}
-          >
-            <Logo
-              className="text-4xl sm:text-5xl"
-              showPeriod={showPeriod}
-              animate={phase === "intro" || phase === "pause"}
-            />
+      {/* Hero */}
+      <section className="mx-auto max-w-7xl px-6 pb-14 pt-4 lg:pb-16">
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
+          <div>
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs text-emerald-700">
+              <span className="size-1.5 animate-pulse rounded-full bg-emerald-500" />
+              Closed beta — design partners
+            </div>
+            <h1 className="text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl">
+              Launch and optimize
+              <br />
+              ChatGPT Ads in minutes
+            </h1>
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-zinc-600">
+              OpenAI opened Ads Manager to all US advertisers in May 2026. Most
+              brands lose first-month spend on context hints that never match.
+              We&apos;re the optimization layer.
+            </p>
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              <a
+                href={BOOK_DEMO_URL}
+                className="rounded-lg bg-emerald-600 px-5 py-3 text-sm font-medium text-white hover:bg-emerald-700"
+              >
+                Book a demo
+              </a>
+              <Link
+                href="/signin"
+                className="rounded-lg px-5 py-3 text-sm font-medium text-zinc-700 hover:bg-zinc-100"
+              >
+                Try the simulator →
+              </Link>
+            </div>
+            <p className="mt-5 text-xs text-zinc-500">
+              Built by {FOUNDER.name} — MIT researcher on AI ad performance,
+              previously Wayward and Balyasny.
+            </p>
           </div>
-        </div>
-
-        <div
-          className={`mt-8 max-w-2xl transition-all duration-500 ease-out ${
-            showContent
-              ? "translate-y-0 opacity-100"
-              : "pointer-events-none translate-y-3 opacity-0"
-          }`}
-        >
-          <h1 className="text-xl font-medium tracking-tight text-zinc-900 sm:text-2xl">
-            Launch and optimize ChatGPT Ads in minutes
-          </h1>
-          <p className="mt-4 text-sm leading-relaxed text-zinc-600 sm:text-base">
-            Built by MIT MBAn researchers working on AI ad performance.
-            Currently onboarding design-partner brands.
-          </p>
-          <p className="mt-3 text-sm leading-relaxed text-zinc-500">
-            OpenAI opened Ads Manager to all US advertisers in May 2026. Early
-            advertisers report significant first-month spend on context hints
-            that never match. We&apos;re the optimization layer.
-          </p>
-        </div>
-
-        <div
-          className={`mt-8 flex flex-wrap items-center justify-center gap-3 transition-all duration-500 ease-out ${
-            showContent
-              ? "translate-y-0 opacity-100"
-              : "pointer-events-none translate-y-3 opacity-0"
-          }`}
-          style={{ transitionDelay: showContent ? "60ms" : "0ms" }}
-        >
-          <a
-            href={BOOK_DEMO_URL}
-            className="inline-flex h-11 items-center justify-center rounded-md bg-emerald-600 px-8 text-sm font-medium text-white transition-colors hover:bg-emerald-700"
-          >
-            Book a demo
-          </a>
-          <Link
-            href="/signin"
-            className="inline-flex h-11 items-center justify-center rounded-md border border-zinc-200 bg-white px-6 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-50"
-          >
-            Try the simulator
-          </Link>
+          <HeroProductPreview />
         </div>
       </section>
 
-      <section
-        className={`relative z-20 mx-auto max-w-4xl px-6 transition-opacity duration-700 ease-out ${
-          showContent ? "opacity-100" : "pointer-events-none opacity-0"
-        }`}
-        style={{ transitionDelay: showContent ? "120ms" : "0ms" }}
-      >
-        <div className="mb-12">
-          <SimulationPreview />
-          <p className="mt-3 text-center text-xs text-zinc-500">
-            Synthetic conversations and hint scores update before you commit
-            budget.
+      {/* Categories */}
+      <section className="border-y border-zinc-200 bg-white py-6">
+        <div className="mx-auto max-w-7xl px-6">
+          <p className="mb-4 text-center text-xs font-medium uppercase tracking-wider text-zinc-400">
+            Built for mid-market DTC and B2B SaaS
           </p>
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+            {categories.map(({ icon: Icon, label }) => (
+              <div
+                key={label}
+                className="flex flex-col items-center gap-2 text-center"
+              >
+                <Icon className="size-4 text-zinc-400" strokeWidth={1.5} />
+                <span className="text-xs text-zinc-600">{label}</span>
+              </div>
+            ))}
+          </div>
         </div>
+      </section>
 
-        <div className="grid gap-6 sm:grid-cols-2">
-          {capabilities.map((item) => (
+      {/* Market */}
+      <section className="mx-auto max-w-7xl px-6 py-14">
+        <div className="grid gap-6 md:grid-cols-3">
+          {marketStats.map((stat) => (
             <article
-              key={item.title}
-              className="rounded-lg border border-zinc-200 bg-white p-6 text-left"
+              key={stat.value}
+              className="rounded-xl border border-zinc-200 bg-white p-5"
             >
-              <h2 className="font-medium text-zinc-900">{item.title}</h2>
+              <p className="text-2xl font-semibold tracking-tight">
+                {stat.value}
+              </p>
+              <p className="text-sm text-zinc-500">{stat.sub}</p>
+              <p className="mt-3 text-sm leading-relaxed text-zinc-600">
+                {stat.body}
+              </p>
+              <p className="mt-3 text-[11px] text-zinc-400">{stat.source}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="border-t border-zinc-200 py-14">
+        <div className="mx-auto grid max-w-7xl gap-5 px-6 sm:grid-cols-2 lg:grid-cols-4">
+          {features.map((f) => (
+            <article
+              key={f.title}
+              className="rounded-xl border border-zinc-200 bg-white p-5"
+            >
+              <h2 className="font-semibold text-zinc-900">{f.title}</h2>
               <p className="mt-2 text-sm leading-relaxed text-zinc-600">
-                {item.body}
+                {f.body}
               </p>
             </article>
           ))}
         </div>
+      </section>
 
-        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6">
-          {steps.map((step, index) => (
-            <div
-              key={step.label}
-              className="rounded-lg border border-zinc-200 bg-white p-5 text-center sm:p-6"
-            >
-              <span className="text-xs font-medium tabular-nums text-zinc-400">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <p className="mt-2 font-medium text-zinc-900">{step.label}</p>
-              <p className="mt-1 text-xs leading-relaxed text-zinc-500 sm:text-sm">
-                {step.detail}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-12">
-          <h2 className="mb-2 text-center text-sm font-medium text-zinc-900">
-            Pricing
+      {/* How it works */}
+      <section className="border-t border-zinc-200 py-14">
+        <div className="mx-auto max-w-7xl px-6">
+          <h2 className="mb-10 text-center text-xl font-semibold tracking-tight">
+            How it works
           </h2>
-          <p className="mb-6 text-center text-sm text-zinc-500">
-            In closed beta with select brands. Start with a free first-campaign
-            simulation.
-          </p>
-          <div className="grid gap-6 sm:grid-cols-2">
-            {pricing.map((tier) => (
-              <article
-                key={tier.name}
-                className={`flex flex-col rounded-lg border bg-white p-6 text-left ${
-                  tier.primary
-                    ? "border-zinc-900 ring-1 ring-zinc-900"
-                    : "border-zinc-200"
-                }`}
-              >
-                <p className="font-medium text-zinc-900">{tier.name}</p>
-                <p className="mt-3 text-2xl font-semibold tracking-tight text-zinc-900">
-                  {tier.price}
-                  {tier.period ? (
-                    <span className="text-base font-normal text-zinc-500">
-                      {" "}
-                      {tier.period}
-                    </span>
-                  ) : null}
+          <div className="relative">
+            <div className="absolute left-[12%] right-[12%] top-6 hidden h-px bg-zinc-200 md:block" />
+            <div className="grid gap-8 md:grid-cols-4">
+              {[
+                { num: "01", title: "Describe", body: "Campaign, budget, audience" },
+                { num: "02", title: "Edit", body: "Hints and creative inline" },
+                { num: "03", title: "Simulate", body: "Predicted match rates" },
+                { num: "04", title: "Launch", body: "Push live to OpenAI" },
+              ].map((s) => (
+                <div key={s.num} className="relative text-center">
+                  <div className="mx-auto mb-3 flex size-12 items-center justify-center rounded-full border border-zinc-200 bg-white text-sm font-semibold text-zinc-500">
+                    {s.num}
+                  </div>
+                  <p className="font-semibold text-zinc-900">{s.title}</p>
+                  <p className="mt-1 text-sm text-zinc-600">{s.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Methodology */}
+      <section className="border-t border-zinc-200 bg-white py-14">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="mb-8 max-w-2xl">
+            <h2 className="text-xl font-semibold tracking-tight">
+              How the simulation works
+            </h2>
+            <p className="mt-2 text-sm text-zinc-600">
+              Agent simulation research from MIT — not a black box.
+            </p>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {methodology.map((m) => (
+              <article key={m.step} className="rounded-xl border border-zinc-200 p-5">
+                <p className="font-mono text-xs text-zinc-400">{m.step}</p>
+                <h3 className="mt-2 font-semibold text-zinc-900">{m.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-zinc-600">
+                  {m.body}
                 </p>
-                <p className="mt-2 text-xs text-zinc-500">{tier.note}</p>
-                <p className="mt-4 flex-1 text-sm leading-relaxed text-zinc-600">
-                  {tier.includes}
-                </p>
-                <a
-                  href={tier.href}
-                  className={`mt-6 inline-flex h-10 items-center justify-center rounded-md px-4 text-sm font-medium transition-colors ${
-                    tier.primary
-                      ? "bg-zinc-900 text-white hover:bg-zinc-800"
-                      : "border border-zinc-200 text-zinc-900 hover:bg-zinc-50"
-                  }`}
-                >
-                  {tier.cta}
-                </a>
               </article>
             ))}
+          </div>
+          <p className="mt-6 text-sm">
+            <Link
+              href="/methodology"
+              className="font-medium text-zinc-900 underline-offset-2 hover:underline"
+            >
+              Read the full methodology →
+            </Link>
+          </p>
+        </div>
+      </section>
+
+      {/* Founder */}
+      <section className="border-t border-zinc-200 py-14">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="flex max-w-xl items-start gap-4">
+            <div className="flex size-14 shrink-0 items-center justify-center rounded-full bg-zinc-900 text-sm font-semibold text-white">
+              MP
+            </div>
+            <div>
+              <p className="font-semibold text-zinc-900">{FOUNDER.name}</p>
+              <p className="text-sm text-zinc-500">
+                {FOUNDER.role}, ContextAds
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-zinc-600">
+                MIT MBAn &apos;26. Researches AI ad performance. Previously
+                Wayward ($2B GMV adtech) and Balyasny.
+              </p>
+              <div className="mt-3 flex gap-4 text-sm">
+                <a
+                  href={FOUNDER.linkedin}
+                  className="text-zinc-600 hover:text-zinc-900"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  LinkedIn
+                </a>
+                <a
+                  href={FOUNDER.github}
+                  className="text-zinc-600 hover:text-zinc-900"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing */}
+      <section className="border-t border-zinc-200 py-14">
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="mb-8 text-center">
+            <h2 className="text-xl font-semibold tracking-tight">Pricing</h2>
+            <p className="mt-2 text-sm text-zinc-600">
+              Closed beta. Free first-campaign simulation for design partners.
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2">
+            <article className="flex flex-col rounded-xl border border-zinc-200 bg-white p-6">
+              <p className="text-xs font-medium uppercase tracking-wider text-zinc-500">
+                Design partner
+              </p>
+              <p className="mt-2 text-3xl font-semibold">Free</p>
+              <p className="text-sm text-zinc-600">First campaign simulation</p>
+              <ul className="mt-5 flex-1 space-y-2 text-sm text-zinc-700">
+                <li>Full draft + simulation</li>
+                <li>Direct founder support</li>
+                <li>Shape what we build next</li>
+              </ul>
+              <a
+                href={BOOK_DEMO_URL}
+                className="mt-6 block rounded-lg bg-zinc-900 py-2.5 text-center text-sm font-medium text-white hover:bg-zinc-800"
+              >
+                Apply for early access
+              </a>
+            </article>
+            <article className="relative flex flex-col rounded-xl border-2 border-emerald-200 bg-white p-6">
+              <span className="absolute -top-2.5 left-6 rounded bg-emerald-600 px-2 py-0.5 text-xs font-medium text-white">
+                Most popular
+              </span>
+              <p className="text-xs font-medium uppercase tracking-wider text-zinc-500">
+                Growth
+              </p>
+              <p className="mt-2 text-3xl font-semibold">
+                $599
+                <span className="text-base font-normal text-zinc-500">/mo</span>
+              </p>
+              <p className="text-sm text-zinc-600">
+                3 workspaces · up to $50K/mo spend
+              </p>
+              <ul className="mt-5 flex-1 space-y-2 text-sm text-zinc-700">
+                <li>Unlimited simulations</li>
+                <li>Optimization rules</li>
+                <li>Predicted vs. actual reporting</li>
+              </ul>
+              <a
+                href={BOOK_DEMO_URL}
+                className="mt-6 block rounded-lg bg-emerald-600 py-2.5 text-center text-sm font-medium text-white hover:bg-emerald-700"
+              >
+                Book a demo
+              </a>
+            </article>
           </div>
           <p className="mt-6 text-center text-sm text-zinc-500">
             Need more?{" "}
             <a
-              href="mailto:hi@getcontextads.com?subject=Enterprise%20pricing"
+              href={`mailto:${CONTACT_EMAIL}?subject=Enterprise%20pricing`}
               className="font-medium text-zinc-900 underline-offset-2 hover:underline"
             >
               Contact sales
-            </a>{" "}
-            for multi-workspace and agency plans.
+            </a>
           </p>
         </div>
+      </section>
 
-        <div className="mt-16">
-          <h2 className="mb-6 text-center text-sm font-medium text-zinc-900">
+      {/* FAQ */}
+      <section className="border-t border-zinc-200 py-14">
+        <div className="mx-auto max-w-5xl px-6">
+          <h2 className="mb-8 text-center text-xl font-semibold tracking-tight">
             FAQ
           </h2>
-          <dl className="space-y-4">
+          <dl className="grid gap-x-10 gap-y-8 md:grid-cols-2">
             {faqs.map((item) => (
-              <div
-                key={item.q}
-                className="rounded-lg border border-zinc-200 bg-white p-5 text-left"
-              >
-                <dt className="font-medium text-zinc-900">{item.q}</dt>
-                <dd className="mt-2 text-sm leading-relaxed text-zinc-600">
+              <div key={item.q}>
+                <dt className="text-sm font-semibold text-zinc-900">{item.q}</dt>
+                <dd className="mt-1.5 text-sm leading-relaxed text-zinc-600">
                   {item.a}
                 </dd>
               </div>
@@ -384,7 +402,7 @@ export function MarketingLandingPage() {
         </div>
       </section>
 
-      <SiteFooter />
+      <MarketingFooter />
     </div>
   );
 }
