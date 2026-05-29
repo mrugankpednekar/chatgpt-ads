@@ -30,12 +30,14 @@ export function MarketingNav({
   onIntroSettled,
 }: MarketingNavProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
+  const centerTransformRef = useRef<string>("");
   const settledRef = useRef(false);
   const introActive = introPhase !== "idle" && introPhase !== "reveal";
 
-  const [transform, setTransform] = useState("none");
+  const [transform, setTransform] = useState<string | null>(
+    introPhase === "idle" || introPhase === "reveal" ? "none" : null,
+  );
   const [transitionEnabled, setTransitionEnabled] = useState(false);
-  const [logoReady, setLogoReady] = useState(introPhase === "idle");
 
   const computeCenterTransform = useCallback(() => {
     const el = wrapRef.current;
@@ -54,23 +56,30 @@ export function MarketingNav({
     if (introPhase === "idle" || introPhase === "reveal") {
       setTransitionEnabled(false);
       setTransform("none");
-      setLogoReady(true);
       return;
     }
 
-    settledRef.current = false;
-
     if (introPhase === "intro" || introPhase === "pause") {
+      settledRef.current = false;
       setTransitionEnabled(false);
-      setTransform(computeCenterTransform());
-      setLogoReady(true);
+      const center = computeCenterTransform();
+      centerTransformRef.current = center;
+      setTransform(center);
       return;
     }
 
     if (introPhase === "move") {
-      requestAnimationFrame(() => {
+      settledRef.current = false;
+      setTransitionEnabled(false);
+      setTransform(centerTransformRef.current || computeCenterTransform());
+
+      const startMove = () => {
         setTransitionEnabled(true);
         setTransform("none");
+      };
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(startMove);
       });
     }
   }, [introPhase, computeCenterTransform]);
@@ -97,6 +106,8 @@ export function MarketingNav({
     onIntroSettled?.();
   };
 
+  const logoVisible = !introActive || transform !== null;
+
   return (
     <nav className="relative z-40 mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
       <div className="flex min-h-9 min-w-[8.5rem] items-center">
@@ -105,9 +116,9 @@ export function MarketingNav({
           className={`origin-center ${
             introActive ? "relative z-50" : ""
           } ${transitionEnabled ? "intro-logo-transform" : ""} ${
-            logoReady || !introActive ? "opacity-100" : "opacity-0"
+            logoVisible ? "opacity-100" : "opacity-0"
           }`}
-          style={{ transform }}
+          style={{ transform: transform ?? "none" }}
           onTransitionEnd={handleTransitionEnd}
         >
           <Link

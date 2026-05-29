@@ -152,15 +152,11 @@ export function MarketingLandingPage() {
   const [showPeriod, setShowPeriod] = useState(false);
   const [contentVisible, setContentVisible] = useState(false);
   const [backdropVisible, setBackdropVisible] = useState(true);
-  const [introScale, setIntroScale] = useState(2.35);
+  const [introScale] = useState(introScaleForViewport);
 
   const handleIntroSettled = useCallback(() => {
     setPhase("reveal");
     setContentVisible(true);
-  }, []);
-
-  useEffect(() => {
-    setIntroScale(introScaleForViewport());
   }, []);
 
   useEffect(() => {
