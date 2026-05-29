@@ -8,6 +8,14 @@
 **/.env.test.local
 **/.env.production.local
 
+# Marketing site
+contextads-website/node_modules/
+contextads-website/.next/
+contextads-website/out/
+contextads-website/.vercel/
+contextads-website/*.tsbuildinfo
+contextads-website/next-env.d.ts
+
 # Next.js app
 chatgpt-ads-simulator/node_modules/
 chatgpt-ads-simulator/.next/

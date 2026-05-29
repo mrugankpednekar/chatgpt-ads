@@ -6,10 +6,12 @@ export default function LandingPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-zinc-50 px-6">
       <div className="max-w-xl text-center">
-        <p className="label-mono mb-4 text-emerald-600">AdLab</p>
         <h1 className="text-4xl font-semibold tracking-tight text-zinc-900 sm:text-5xl">
-          Launch ChatGPT Ads in minutes
+          ContextAds
         </h1>
+        <p className="mt-2 text-lg text-zinc-600">
+          Launch ChatGPT Ads in minutes
+        </p>
         <p className="mt-4 text-lg text-zinc-600">
           AI-drafted campaigns, pre-spend simulation, and one-click launch.
         </p>
