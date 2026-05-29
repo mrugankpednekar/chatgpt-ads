@@ -1,0 +1,73 @@
+{
+  "campaign": {
+    "name": "Bubble Skincare - Gen Z Acquisition Q2",
+    "objective": "clicks",
+    "daily_budget_usd": 50,
+    "duration_days": 30,
+    "rationale": "Clicks objective fits performance goal of driving site traffic and first purchases."
+  },
+  "ad_groups": [
+    {
+      "id": "ag_1",
+      "name": "Sensitive Skin Beginners",
+      "persona_summary": "Teens and early-20s with sensitive or acne-prone skin starting their skincare journey, budget-conscious",
+      "intent_stage": "research",
+      "context_hints": [
+        { "id": "hint_1", "text": "Gen Z buyers asking about acne treatment for sensitive skin", "pattern": "persona_intent" },
+        { "id": "hint_2", "text": "How can I treat hyperpigmentation without harsh products", "pattern": "question" },
+        { "id": "hint_3", "text": "Affordable skincare routine for combo skin, not luxury brands", "pattern": "topic_disqualifier" },
+        { "id": "hint_4", "text": "Looking to clear acne in 4-8 weeks", "pattern": "outcome" },
+        { "id": "hint_5", "text": "Alternatives to expensive dermatologist-recommended skincare", "pattern": "stack_comparison" },
+        { "id": "hint_6", "text": "Best Gen Z skincare brands", "pattern": "outcome" },
+        { "id": "hint_7", "text": "Starting a skincare routine in my teens", "pattern": "persona_intent" }
+      ],
+      "ads": [
+        { "id": "ad_1", "title": "Skincare under $20", "description": "Gentle, derm-developed. No 12-step routines.", "landing_page": "https://hellobubble.com/starter-kit", "creative_angle": "Price + simplicity" },
+        { "id": "ad_2", "title": "Sensitive? Start here", "description": "Every formula tested for sensitive skin first.", "landing_page": "https://hellobubble.com/sensitive", "creative_angle": "Safety-first for sensitive skin" },
+        { "id": "ad_3", "title": "Anti-influencer skincare", "description": "Real ingredients. Real prices. No markups.", "landing_page": "https://hellobubble.com/about", "creative_angle": "Anti-brand positioning" }
+      ],
+      "max_cpc_bid_usd": 3.5,
+      "budget_allocation_pct": 45
+    },
+    {
+      "id": "ag_2",
+      "name": "Active Ingredient Researchers",
+      "persona_summary": "20s-30s researching specific actives (retinol, vitamin C, niacinamide) for targeted concerns",
+      "intent_stage": "comparison",
+      "context_hints": [
+        { "id": "hint_8", "text": "Best vitamin C serums for brightening", "pattern": "outcome" },
+        { "id": "hint_9", "text": "Niacinamide vs salicylic acid for combo skin", "pattern": "stack_comparison" },
+        { "id": "hint_10", "text": "How to start using retinol without irritation", "pattern": "question" },
+        { "id": "hint_11", "text": "Budget-friendly active ingredient skincare", "pattern": "topic_disqualifier" },
+        { "id": "hint_12", "text": "Layering active ingredients safely", "pattern": "outcome" },
+        { "id": "hint_13", "text": "Skincare for hyperpigmentation under $50", "pattern": "persona_intent" }
+      ],
+      "ads": [
+        { "id": "ad_4", "title": "Vitamin C, made simple", "description": "Brightening serum your skin can tolerate.", "landing_page": "https://hellobubble.com/vitamin-c", "creative_angle": "Tolerability angle" },
+        { "id": "ad_5", "title": "Active ingredients, $15", "description": "Pro-grade formulas without the markup.", "landing_page": "https://hellobubble.com/actives", "creative_angle": "Value angle" },
+        { "id": "ad_6", "title": "Layer with confidence", "description": "Routines that actually work together.", "landing_page": "https://hellobubble.com/routines", "creative_angle": "Routine-building angle" }
+      ],
+      "max_cpc_bid_usd": 4.0,
+      "budget_allocation_pct": 35
+    },
+    {
+      "id": "ag_3",
+      "name": "Gift & Bundle Buyers",
+      "persona_summary": "Parents and gift-givers buying skincare for teens/young adults, focused on safety and value",
+      "intent_stage": "decision",
+      "context_hints": [
+        { "id": "hint_14", "text": "Best skincare gift for teenage daughter", "pattern": "persona_intent" },
+        { "id": "hint_15", "text": "Safe skincare for first-time users", "pattern": "outcome" },
+        { "id": "hint_16", "text": "Affordable skincare bundle ideas", "pattern": "outcome" },
+        { "id": "hint_17", "text": "Holiday skincare gift sets under $40", "pattern": "persona_intent" },
+        { "id": "hint_18", "text": "Skincare brands recommended by dermatologists", "pattern": "stack_comparison" }
+      ],
+      "ads": [
+        { "id": "ad_7", "title": "Skincare gift sets", "description": "Curated bundles starting at $29.", "landing_page": "https://hellobubble.com/gifts", "creative_angle": "Gift positioning" },
+        { "id": "ad_8", "title": "Teen-safe formulas", "description": "Derm-developed, parent-approved.", "landing_page": "https://hellobubble.com/teen", "creative_angle": "Parent safety angle" }
+      ],
+      "max_cpc_bid_usd": 3.0,
+      "budget_allocation_pct": 20
+    }
+  ]
+}
