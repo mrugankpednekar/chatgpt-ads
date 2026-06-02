@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
   DEFAULT_CAMPAIGN_BRIEF,
-  EXAMPLE_BRIEFS,
   loadPrebakedDraft,
   shouldUsePrebakedDraft,
 } from "@/lib/demo-data";
@@ -81,21 +80,9 @@ export default function NewCampaignPage() {
               <Textarea
                 value={brief}
                 onChange={(e) => setBrief(e.target.value)}
-                placeholder="Describe your campaign in plain English..."
+                placeholder={DEFAULT_CAMPAIGN_BRIEF}
                 className="mt-3 min-h-32 resize-none bg-white text-base"
               />
-              <div className="mt-4 flex flex-wrap gap-2">
-                {EXAMPLE_BRIEFS.map((chip) => (
-                  <button
-                    key={chip}
-                    type="button"
-                    onClick={() => generateDraft(chip)}
-                    className="rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1.5 text-xs text-zinc-600 transition-colors hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700"
-                  >
-                    {chip}
-                  </button>
-                ))}
-              </div>
               <Button
                 className="mt-4 bg-emerald-600 hover:bg-emerald-700"
                 disabled={loading || !brief.trim()}

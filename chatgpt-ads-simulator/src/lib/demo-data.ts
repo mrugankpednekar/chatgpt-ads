@@ -45,11 +45,8 @@ export const DEMO_USER: DemoUser = {
 export const DEFAULT_CAMPAIGN_BRIEF =
   "Launch our Vitamin C serum to Gen Z, $1500/month, drive purchases";
 
-export const EXAMPLE_BRIEFS = [
-  DEFAULT_CAMPAIGN_BRIEF,
-  "Promote holiday gift bundles to gift shoppers, $5000 total",
-  "Test ChatGPT Ads for our sensitive skin line, $800/month",
-];
+/** Exact brief text that loads the prebaked Bubble demo campaign + simulation cache. */
+export const DEMO_BRIEF_SENTENCE = DEFAULT_CAMPAIGN_BRIEF;
 
 export const DEMO_DASHBOARD_METRICS = {
   totalSpend30d: 1847.2,
