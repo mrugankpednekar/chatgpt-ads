@@ -27,7 +27,7 @@ export function Sidebar() {
   }
 
   return (
-    <aside className="flex h-screen w-56 shrink-0 flex-col bg-zinc-900 text-zinc-100">
+    <aside className="flex h-full w-56 shrink-0 flex-col bg-zinc-900 text-zinc-100">
       <div className="border-b border-zinc-800 px-4 py-4">
         <button
           type="button"
