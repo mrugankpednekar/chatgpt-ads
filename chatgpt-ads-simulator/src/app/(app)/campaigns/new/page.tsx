@@ -17,6 +17,19 @@ import {
 import { useAppStore } from "@/lib/store";
 import type { CampaignDraft } from "@/lib/types";
 
+const GENERATION_MIN_DELAY_MS = 1800;
+
+const GENERATION_STEPS = [
+  "Parsing campaign brief",
+  "Drafting ad groups and personas",
+  "Generating context hints",
+  "Writing ad copy and creatives",
+];
+
+function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export default function NewCampaignPage() {
   const router = useRouter();
   const brand = useAppStore((s) => s.brand);
@@ -24,17 +37,26 @@ export default function NewCampaignPage() {
   const [brief, setBrief] = useState("");
   const [draft, setDraft] = useState<CampaignDraft | null>(null);
   const [loading, setLoading] = useState(false);
+  const [generationStep, setGenerationStep] = useState(0);
 
   async function generateDraft(inputBrief: string) {
     setLoading(true);
+    setGenerationStep(0);
     setBrief(inputBrief);
+
+    const stepTimer = window.setInterval(() => {
+      setGenerationStep((current) =>
+        current < GENERATION_STEPS.length - 1 ? current + 1 : current,
+      );
+    }, 450);
 
     try {
       let result: CampaignDraft;
-      if (shouldUsePrebakedDraft(inputBrief)) {
-        result = await loadPrebakedDraft();
-        toast.success("Campaign drafted");
-      } else {
+      const draftPromise = (async () => {
+        if (shouldUsePrebakedDraft(inputBrief)) {
+          return loadPrebakedDraft();
+        }
+
         const res = await fetch("/api/draft-campaign", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -42,14 +64,27 @@ export default function NewCampaignPage() {
         });
         if (!res.ok) throw new Error("Draft failed");
         const data = await res.json();
-        result = data.draft;
-        toast.success("Campaign generated");
-      }
+        return data.draft as CampaignDraft;
+      })();
+
+      const [loadedDraft] = await Promise.all([
+        draftPromise,
+        delay(GENERATION_MIN_DELAY_MS),
+      ]);
+
+      result = loadedDraft;
       setDraft(result);
+      toast.success(
+        shouldUsePrebakedDraft(inputBrief)
+          ? "Campaign drafted"
+          : "Campaign generated",
+      );
     } catch {
       toast.error("Failed to generate campaign");
     } finally {
+      window.clearInterval(stepTimer);
       setLoading(false);
+      setGenerationStep(0);
     }
   }
 
@@ -71,7 +106,32 @@ export default function NewCampaignPage() {
     <>
       <TopNav title="Create campaign" />
       <div className="mx-auto max-w-4xl space-y-6 p-6">
-        {!draft ? (
+        {loading ? (
+          <div className="surface flex min-h-[320px] flex-col items-center justify-center p-10 text-center">
+            <Loader2 className="size-8 animate-spin text-emerald-600" />
+            <p className="mt-4 text-sm font-medium text-zinc-900">
+              Building your campaign
+            </p>
+            <p className="mt-1 text-sm text-zinc-500">
+              {GENERATION_STEPS[generationStep]}
+            </p>
+            <ul className="mt-6 space-y-2 text-left text-xs text-zinc-400">
+              {GENERATION_STEPS.map((step, index) => (
+                <li
+                  key={step}
+                  className={
+                    index <= generationStep
+                      ? "text-emerald-700"
+                      : "text-zinc-400"
+                  }
+                >
+                  {index < generationStep ? "✓" : index === generationStep ? "…" : "○"}{" "}
+                  {step}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : !draft ? (
           <div className="space-y-4">
             <div className="surface p-6">
               <label className="text-sm font-medium text-zinc-900">
@@ -85,17 +145,10 @@ export default function NewCampaignPage() {
               />
               <Button
                 className="mt-4 bg-emerald-600 hover:bg-emerald-700"
-                disabled={loading || !brief.trim()}
+                disabled={!brief.trim()}
                 onClick={() => generateDraft(brief || DEFAULT_CAMPAIGN_BRIEF)}
               >
-                {loading ? (
-                  <>
-                    <Loader2 className="mr-2 size-4 animate-spin" />
-                    Drafting…
-                  </>
-                ) : (
-                  "Generate campaign"
-                )}
+                Generate campaign
               </Button>
             </div>
           </div>
