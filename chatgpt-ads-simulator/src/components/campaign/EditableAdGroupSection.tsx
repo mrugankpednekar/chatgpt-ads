@@ -119,6 +119,7 @@ export function EditableAdGroupSection({
                   <EditableAdCard
                     key={ad.id}
                     ad={ad}
+                    adIndex={index}
                     defaultExpanded={index === 0 && group.ads.length === 1}
                     onChange={(next) => handleAdChange(ad.id, next)}
                     onDelete={() => handleDeleteAd(ad.id)}

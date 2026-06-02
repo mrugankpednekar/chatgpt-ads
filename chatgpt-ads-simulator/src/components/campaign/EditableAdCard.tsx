@@ -7,11 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { resolveCreativeImage } from "@/lib/creative-images";
 import type { AdDraft } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 interface EditableAdCardProps {
   ad: AdDraft;
+  adIndex?: number;
   onChange: (ad: AdDraft) => void;
   onDelete: () => void;
   defaultExpanded?: boolean;
@@ -19,37 +21,34 @@ interface EditableAdCardProps {
 
 export function EditableAdCard({
   ad,
+  adIndex = 0,
   onChange,
   onDelete,
   defaultExpanded = false,
 }: EditableAdCardProps) {
   const [expanded, setExpanded] = useState(defaultExpanded);
   const displayName = ad.creative_angle.trim() || ad.title.trim() || "Untitled ad";
-  const imageSrc = ad.image_url?.trim();
+  const imageSrc = resolveCreativeImage(ad, adIndex);
 
   return (
     <div className="rounded-md border border-zinc-200 bg-white">
-      <div className="flex items-center gap-2 px-3 py-2">
+      <div className="flex items-center gap-3 px-3 py-2.5">
         <button
           type="button"
           onClick={() => setExpanded((open) => !open)}
-          className="flex min-w-0 flex-1 items-center gap-2 text-left"
+          className="flex min-w-0 flex-1 items-center gap-3 text-left"
         >
           {expanded ? (
             <ChevronDown className="size-4 shrink-0 text-zinc-400" />
           ) : (
             <ChevronRight className="size-4 shrink-0 text-zinc-400" />
           )}
-          {imageSrc ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={imageSrc}
-              alt=""
-              className="size-10 shrink-0 rounded-md border border-zinc-200 bg-zinc-50 object-cover"
-            />
-          ) : (
-            <div className="size-10 shrink-0 rounded-md border border-dashed border-zinc-200 bg-zinc-50" />
-          )}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={imageSrc}
+            alt=""
+            className="size-14 shrink-0 rounded-lg border border-zinc-200 bg-zinc-50 object-contain p-1"
+          />
           <div className="min-w-0">
             <p className="truncate text-sm font-medium text-zinc-900">
               {displayName}
@@ -72,7 +71,16 @@ export function EditableAdCard({
       </div>
 
       {expanded && (
-        <div className={cn("space-y-3 border-t border-zinc-200 px-3 py-3")}>
+        <div className={cn("space-y-4 border-t border-zinc-200 px-3 py-4")}>
+          <div className="overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={imageSrc}
+              alt={ad.title || displayName}
+              className="mx-auto h-56 w-full max-w-md object-contain p-4 sm:h-64"
+            />
+          </div>
+
           <div className="space-y-1.5">
             <Label className="text-xs text-zinc-500">Ad name / angle</Label>
             <Input

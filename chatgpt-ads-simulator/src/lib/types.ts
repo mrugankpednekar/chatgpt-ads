@@ -1,3 +1,5 @@
+import { resolveCreativeImage } from "./creative-images";
+
 export type IntentStage =
   | "discovery"
   | "research"
@@ -374,6 +376,7 @@ export function draftToBrandInput(
   const hints = primaryGroup?.context_hints.map((h) => h.text) ?? [];
   const creatives: Creative[] = [];
 
+  let creativeIndex = 0;
   for (const group of draft.ad_groups) {
     for (const ad of group.ads) {
       creatives.push({
@@ -381,8 +384,9 @@ export function draftToBrandInput(
         title: ad.title,
         description: ad.description,
         landingPage: ad.landing_page,
-        imageUrl: ad.image_url,
+        imageUrl: resolveCreativeImage(ad, creativeIndex),
       });
+      creativeIndex += 1;
     }
   }
 

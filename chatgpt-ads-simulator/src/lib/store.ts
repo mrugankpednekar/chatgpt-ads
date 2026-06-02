@@ -3,6 +3,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+import { enrichDraftWithCreativeImages } from "./draft-enrichment";
 import {
   DEMO_BRAND,
   createInitialCampaign,
@@ -88,12 +89,20 @@ export const useAppStore = create<AppState>()(
       },
 
       initializeWorkspace: async () => {
-        if (get().campaigns.length > 0) return;
-        const draft = await loadPrebakedDraft();
-        const campaign = createInitialCampaign(draft);
+        if (get().campaigns.length > 0) {
+          set((state) => ({
+            campaigns: state.campaigns.map((campaign) => ({
+              ...campaign,
+              draft: enrichDraftWithCreativeImages(campaign.draft),
+            })),
+          }));
+          return;
+        }
+
+        const draft = enrichDraftWithCreativeImages(await loadPrebakedDraft());
         set({
           brand: DEMO_BRAND,
-          campaigns: [campaign],
+          campaigns: [createInitialCampaign(draft)],
         });
       },
 
@@ -232,6 +241,24 @@ export const useAppStore = create<AppState>()(
     }),
     {
       name: "adlab-store",
+      version: 1,
+      migrate: (persisted, version) => {
+        const state = persisted as {
+          isAuthenticated?: boolean;
+          user?: DemoUser | null;
+          brand?: BrandProfile;
+          campaigns?: PlatformCampaign[];
+        };
+
+        if (version < 1 && state.campaigns?.length) {
+          state.campaigns = state.campaigns.map((campaign) => ({
+            ...campaign,
+            draft: enrichDraftWithCreativeImages(campaign.draft),
+          }));
+        }
+
+        return state as AppState;
+      },
       partialize: (state) => ({
         isAuthenticated: state.isAuthenticated,
         user: state.user,
