@@ -83,6 +83,11 @@ export default function DashboardPage() {
               <Link href={`/campaigns/${activeCampaign.id}`}>
                 <Button variant="outline">View campaign</Button>
               </Link>
+              {activeCampaign.lastResults && (
+                <Link href={`/campaigns/${activeCampaign.id}/results`}>
+                  <Button variant="outline">View results</Button>
+                </Link>
+              )}
               {(activeCampaign.status === "draft" ||
                 activeCampaign.status === "simulated") && (
                 <Link href={`/campaigns/${activeCampaign.id}/simulate`}>

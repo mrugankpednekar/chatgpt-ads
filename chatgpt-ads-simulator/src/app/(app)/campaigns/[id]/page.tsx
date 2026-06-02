@@ -77,7 +77,13 @@ export default function CampaignDetailPage() {
                 Edit context hints, ads, and creatives before re-running
                 simulation.
               </p>
-              {canSimulate && (
+            {canSimulate && (
+              <div className="flex flex-wrap gap-2">
+                {campaign.lastResults && (
+                  <Link href={`/campaigns/${id}/results`}>
+                    <Button variant="outline">View results</Button>
+                  </Link>
+                )}
                 <Link href={`/campaigns/${id}/simulate`}>
                   <Button className="bg-emerald-600 hover:bg-emerald-700">
                     {campaign.status === "simulated"
@@ -85,7 +91,8 @@ export default function CampaignDetailPage() {
                       : "Run simulation"}
                   </Button>
                 </Link>
-              )}
+              </div>
+            )}
             </div>
             <CampaignDraftEditor
               draft={campaign.draft}
@@ -110,7 +117,12 @@ export default function CampaignDetailPage() {
         )}
 
         {canEditDraft && canSimulate && (
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-2">
+            {campaign.lastResults && (
+              <Link href={`/campaigns/${id}/results`}>
+                <Button variant="outline">View results</Button>
+              </Link>
+            )}
             <Link href={`/campaigns/${id}/simulate`}>
               <Button className="bg-emerald-600 hover:bg-emerald-700">
                 {campaign.status === "simulated"

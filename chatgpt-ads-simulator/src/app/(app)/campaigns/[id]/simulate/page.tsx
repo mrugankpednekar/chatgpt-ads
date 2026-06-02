@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
@@ -80,7 +81,16 @@ export default function SimulatePage() {
   if (sim.isComplete && sim.results) {
     return (
       <>
-        <TopNav title="Simulation results" />
+        <TopNav
+          title="Simulation results"
+          actions={
+            <Link href={`/campaigns/${id}/results`}>
+              <Button variant="outline" size="sm">
+                Saved results
+              </Button>
+            </Link>
+          }
+        />
         <div className="p-6">
           <ResultsDashboard
             results={sim.results}
