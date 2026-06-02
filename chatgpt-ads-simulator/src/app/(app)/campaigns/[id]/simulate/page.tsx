@@ -14,6 +14,7 @@ import {
   usePlatformSimulation,
 } from "@/hooks/usePlatformSimulation";
 import { useAppStore } from "@/lib/store";
+import { draftToBrandInput } from "@/lib/types";
 
 export default function SimulatePage() {
   const params = useParams();
@@ -136,6 +137,7 @@ export default function SimulatePage() {
             hints={sim.contextHints}
             progress={sim.progress}
             totalConversations={TOTAL_CONVERSATIONS}
+            creatives={draftToBrandInput(campaign.draft, brand).creatives}
             onCancel={sim.handleCancel}
             brandName={brand.name}
           />

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <rect width="200" height="200" rx="16" fill="#FAFAFA"/>
+  <rect x="56" y="64" width="88" height="96" rx="8" fill="#fff" stroke="#E4E4E7" stroke-width="2"/>
+  <rect x="64" y="76" width="20" height="48" rx="4" fill="#FFF0F5" stroke="#FF6B9D" stroke-width="1"/>
+  <rect x="90" y="76" width="20" height="48" rx="4" fill="#FFF0F5" stroke="#FF6B9D" stroke-width="1"/>
+  <rect x="116" y="76" width="20" height="48" rx="4" fill="#FFF0F5" stroke="#FF6B9D" stroke-width="1"/>
+  <rect x="72" y="132" width="56" height="16" rx="4" fill="#FF6B9D" opacity="0.12"/>
+  <text x="100" y="144" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7" fill="#FF6B9D">3-step kit</text>
+</svg>

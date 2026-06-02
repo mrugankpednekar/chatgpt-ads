@@ -22,9 +22,9 @@
         { "id": "hint_7", "text": "Starting a skincare routine in my teens", "pattern": "persona_intent" }
       ],
       "ads": [
-        { "id": "ad_1", "title": "Skincare under $20", "description": "Gentle, derm-developed. No 12-step routines.", "landing_page": "https://hellobubble.com/starter-kit", "creative_angle": "Price + simplicity" },
-        { "id": "ad_2", "title": "Sensitive? Start here", "description": "Every formula tested for sensitive skin first.", "landing_page": "https://hellobubble.com/sensitive", "creative_angle": "Safety-first for sensitive skin" },
-        { "id": "ad_3", "title": "Anti-influencer skincare", "description": "Real ingredients. Real prices. No markups.", "landing_page": "https://hellobubble.com/about", "creative_angle": "Anti-brand positioning" }
+        { "id": "ad_1", "title": "Skincare under $20", "description": "Gentle, derm-developed. No 12-step routines.", "landing_page": "https://hellobubble.com/starter-kit", "creative_angle": "Price + simplicity", "image_url": "/creative-assets/ad_1.svg" },
+        { "id": "ad_2", "title": "Sensitive? Start here", "description": "Every formula tested for sensitive skin first.", "landing_page": "https://hellobubble.com/sensitive", "creative_angle": "Safety-first for sensitive skin", "image_url": "/creative-assets/ad_2.svg" },
+        { "id": "ad_3", "title": "Anti-influencer skincare", "description": "Real ingredients. Real prices. No markups.", "landing_page": "https://hellobubble.com/about", "creative_angle": "Anti-brand positioning", "image_url": "/creative-assets/ad_3.svg" }
       ],
       "max_cpc_bid_usd": 3.5,
       "budget_allocation_pct": 45
@@ -43,9 +43,9 @@
         { "id": "hint_13", "text": "Skincare for hyperpigmentation under $50", "pattern": "persona_intent" }
       ],
       "ads": [
-        { "id": "ad_4", "title": "Vitamin C, made simple", "description": "Brightening serum your skin can tolerate.", "landing_page": "https://hellobubble.com/vitamin-c", "creative_angle": "Tolerability angle" },
-        { "id": "ad_5", "title": "Active ingredients, $15", "description": "Pro-grade formulas without the markup.", "landing_page": "https://hellobubble.com/actives", "creative_angle": "Value angle" },
-        { "id": "ad_6", "title": "Layer with confidence", "description": "Routines that actually work together.", "landing_page": "https://hellobubble.com/routines", "creative_angle": "Routine-building angle" }
+        { "id": "ad_4", "title": "Vitamin C, made simple", "description": "Brightening serum your skin can tolerate.", "landing_page": "https://hellobubble.com/vitamin-c", "creative_angle": "Tolerability angle", "image_url": "/creative-assets/ad_4.svg" },
+        { "id": "ad_5", "title": "Active ingredients, $15", "description": "Pro-grade formulas without the markup.", "landing_page": "https://hellobubble.com/actives", "creative_angle": "Value angle", "image_url": "/creative-assets/ad_5.svg" },
+        { "id": "ad_6", "title": "Layer with confidence", "description": "Routines that actually work together.", "landing_page": "https://hellobubble.com/routines", "creative_angle": "Routine-building angle", "image_url": "/creative-assets/ad_6.svg" }
       ],
       "max_cpc_bid_usd": 4.0,
       "budget_allocation_pct": 35
@@ -63,8 +63,8 @@
         { "id": "hint_18", "text": "Skincare brands recommended by dermatologists", "pattern": "stack_comparison" }
       ],
       "ads": [
-        { "id": "ad_7", "title": "Skincare gift sets", "description": "Curated bundles starting at $29.", "landing_page": "https://hellobubble.com/gifts", "creative_angle": "Gift positioning" },
-        { "id": "ad_8", "title": "Teen-safe formulas", "description": "Derm-developed, parent-approved.", "landing_page": "https://hellobubble.com/teen", "creative_angle": "Parent safety angle" }
+        { "id": "ad_7", "title": "Skincare gift sets", "description": "Curated bundles starting at $29.", "landing_page": "https://hellobubble.com/gifts", "creative_angle": "Gift positioning", "image_url": "/creative-assets/ad_7.svg" },
+        { "id": "ad_8", "title": "Teen-safe formulas", "description": "Derm-developed, parent-approved.", "landing_page": "https://hellobubble.com/teen", "creative_angle": "Parent safety angle", "image_url": "/creative-assets/ad_8.svg" }
       ],
       "max_cpc_bid_usd": 3.0,
       "budget_allocation_pct": 20

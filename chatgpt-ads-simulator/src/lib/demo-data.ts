@@ -3,6 +3,7 @@ import type {
   BrandProfile,
   CampaignDraft,
   DemoUser,
+  PerformanceData,
   PlatformCampaign,
 } from "./types";
 import { isDefaultBrief } from "./types";
@@ -80,18 +81,21 @@ export const DEMO_BRAND_INPUT: BrandInput = {
       title: "Skincare under $20",
       description: "Gentle, derm-developed. No 12-step routines.",
       landingPage: "https://hellobubble.com/starter-kit",
+      imageUrl: "/creative-assets/ad_1.svg",
     },
     {
       id: "ad_2",
       title: "Sensitive? Start here",
       description: "Every formula tested for sensitive skin first.",
       landingPage: "https://hellobubble.com/sensitive",
+      imageUrl: "/creative-assets/ad_2.svg",
     },
     {
       id: "ad_3",
       title: "Anti-influencer skincare",
       description: "Real ingredients. Real prices. No markups.",
       landingPage: "https://hellobubble.com/about",
+      imageUrl: "/creative-assets/ad_3.svg",
     },
   ],
 };
@@ -202,6 +206,12 @@ export async function replayDemoEvents(
 export async function loadPrebakedDraft(): Promise<CampaignDraft> {
   const response = await fetch("/demo-cache/bubble-skincare-campaign.json");
   if (!response.ok) throw new Error("Failed to load campaign draft");
+  return response.json();
+}
+
+export async function loadPrebakedPerformance(): Promise<PerformanceData> {
+  const response = await fetch("/demo-cache/bubble-skincare-performance.json");
+  if (!response.ok) throw new Error("Failed to load performance data");
   return response.json();
 }
 

@@ -158,7 +158,8 @@ Return ONLY valid JSON, no preamble, no code fences:
           "title": "string (16-24 chars)",
           "description": "string (32-48 chars)",
           "landing_page": "string",
-          "creative_angle": "string"
+          "creative_angle": "string",
+          "image_url": "optional product image URL path"
         }
       ],
       "max_cpc_bid_usd": number,

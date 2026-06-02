@@ -355,10 +355,18 @@ export function ResultsDashboard({
             <Card
               key={`${creativeScore.creative.title}-${index}`}
               className={cn(
-                "surface shadow-none",
+                "surface overflow-hidden shadow-none",
                 creativeScore.isWinner && "border-primary/40",
               )}
             >
+              {creativeScore.creative.imageUrl && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={creativeScore.creative.imageUrl}
+                  alt=""
+                  className="h-32 w-full border-b border-zinc-200 bg-zinc-50 object-cover"
+                />
+              )}
               <CardHeader>
                 <div className="flex items-start justify-between gap-3">
                   <CardTitle className="text-base text-foreground">

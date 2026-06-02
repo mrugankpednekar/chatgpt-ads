@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <rect width="200" height="200" rx="16" fill="#FAFAFA"/>
+  <rect x="76" y="56" width="48" height="112" rx="10" fill="#fff" stroke="#E4E4E7" stroke-width="2"/>
+  <rect x="84" y="64" width="32" height="20" rx="4" fill="#FFB347" opacity="0.35"/>
+  <rect x="86" y="92" width="28" height="56" rx="4" fill="#FFF8E7"/>
+  <text x="100" y="78" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7" fill="#FF6B9D" font-weight="600">Vit C</text>
+  <line x1="92" y1="108" x2="108" y2="124" stroke="#FF6B9D" stroke-width="2" stroke-linecap="round"/>
+  <ellipse cx="100" cy="172" rx="26" ry="5" fill="#E4E4E7" opacity="0.4"/>
+</svg>

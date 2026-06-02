@@ -139,10 +139,21 @@ export function SimulationView({
               <div
                 key={creative.id}
                 className={cn(
-                  "rounded-md border border-border p-3",
+                  "flex gap-3 rounded-md border border-border p-3",
                   !creativePhaseStarted && "opacity-50",
                 )}
               >
+                {creative.imageUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={creative.imageUrl}
+                    alt=""
+                    className="size-12 shrink-0 rounded-md border border-border bg-zinc-50 object-cover"
+                  />
+                ) : (
+                  <div className="size-12 shrink-0 rounded-md border border-dashed border-border bg-zinc-50" />
+                )}
+                <div className="min-w-0 flex-1">
                 <p className="line-clamp-1 text-sm font-medium text-foreground">
                   {creative.title}
                 </p>
@@ -158,6 +169,7 @@ export function SimulationView({
                 {progress >= 100 && (
                   <p className="mt-2 text-xs text-primary">Complete</p>
                 )}
+                </div>
               </div>
             ))}
           </div>

@@ -161,6 +161,7 @@ export function aggregateCreativeResults(
       title: creative.title,
       description: creative.description,
       landingPage: creative.landingPage,
+      imageUrl: creative.imageUrl,
       predictedCTR: Number(predictedCTR.toFixed(2)),
       confidence:
         predictedCTR > 0

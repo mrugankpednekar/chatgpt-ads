@@ -24,6 +24,7 @@ export function createEmptyAd(): AdDraft {
     description: "",
     landing_page: "",
     creative_angle: "New ad",
+    image_url: "",
   };
 }
 

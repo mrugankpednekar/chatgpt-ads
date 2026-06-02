@@ -1,13 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 import { MetricCard } from "@/components/performance/MetricCard";
+import { PerformanceChart } from "@/components/performance/PerformanceChart";
 import { TopNav } from "@/components/layout/Sidebar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { DEMO_DASHBOARD_METRICS } from "@/lib/demo-data";
+import { DEMO_DASHBOARD_METRICS, loadPrebakedPerformance } from "@/lib/demo-data";
 import { useAppStore } from "@/lib/store";
+import type { PerformanceData } from "@/lib/types";
 
 function formatCurrency(n: number) {
   return new Intl.NumberFormat("en-US", {
@@ -20,11 +23,35 @@ export default function DashboardPage() {
   const campaigns = useAppStore((s) => s.campaigns);
   const activeCampaign =
     campaigns.find((c) => c.status === "active") ?? campaigns[0];
+  const [performance, setPerformance] = useState<PerformanceData | null>(null);
+  const [performanceLoading, setPerformanceLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    void loadPrebakedPerformance()
+      .then((data) => {
+        if (!cancelled) setPerformance(data);
+      })
+      .catch(() => {
+        if (!cancelled) setPerformance(null);
+      })
+      .finally(() => {
+        if (!cancelled) setPerformanceLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <>
       <TopNav title="Dashboard" />
       <div className="space-y-6 p-6">
+        <PerformanceChart
+          data={performance}
+          loading={performanceLoading}
+        />
+
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <MetricCard
             label="Total spend (30d)"

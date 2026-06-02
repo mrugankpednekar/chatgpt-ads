@@ -43,6 +43,7 @@ export interface Creative {
   title: string;
   description: string;
   landingPage: string;
+  imageUrl?: string;
 }
 
 export interface BrandInput {
@@ -130,6 +131,7 @@ export interface AggregatedCreativeResult {
   title: string;
   description: string;
   landingPage: string;
+  imageUrl?: string;
   predictedCTR: number;
   confidence: number;
   predictedClicksPer1000: number;
@@ -277,6 +279,7 @@ export interface AdDraft {
   description: string;
   landing_page: string;
   creative_angle: string;
+  image_url?: string;
 }
 
 export interface AdGroupDraft {
@@ -378,6 +381,7 @@ export function draftToBrandInput(
         title: ad.title,
         description: ad.description,
         landingPage: ad.landing_page,
+        imageUrl: ad.image_url,
       });
     }
   }
@@ -473,6 +477,7 @@ export function toUIResults(results: RankedResults): UIResults {
         title: creative.title,
         description: creative.description,
         landingPage: creative.landingPage,
+        imageUrl: creative.imageUrl,
       },
       predictedCTR: creative.predictedCTR,
       predictedClicksPer1000: creative.predictedClicksPer1000,
@@ -519,6 +524,10 @@ export function toBrandInput(body: SimulateRequestBody): BrandInput {
       title: creative.title.trim(),
       description: creative.description.trim(),
       landingPage: creative.landingPage.trim(),
+      imageUrl:
+        "imageUrl" in creative && typeof creative.imageUrl === "string"
+          ? creative.imageUrl.trim() || undefined
+          : undefined,
     })),
   };
 }

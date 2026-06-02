@@ -1,3 +1,4 @@
+import { defaultCreativeImage } from "@/lib/creative-images";
 import { DRAFT_CAMPAIGN_PROMPT } from "@/lib/prompts";
 import { fullModel, generateJsonFromPrompt } from "@/lib/openai";
 import type { BrandProfile, CampaignDraft } from "@/lib/types";
@@ -44,6 +45,7 @@ const draftSchema = z.object({
           description: z.string(),
           landing_page: z.string(),
           creative_angle: z.string(),
+          image_url: z.string().optional(),
         }),
       ),
       max_cpc_bid_usd: z.number(),
@@ -68,7 +70,19 @@ export async function POST(req: Request) {
       schema: draftSchema,
     });
 
-    return Response.json({ draft });
+    let adIndex = 0;
+    const withImages: CampaignDraft = {
+      ...draft,
+      ad_groups: draft.ad_groups.map((group) => ({
+        ...group,
+        ads: group.ads.map((ad) => ({
+          ...ad,
+          image_url: ad.image_url?.trim() || defaultCreativeImage(adIndex++),
+        })),
+      })),
+    };
+
+    return Response.json({ draft: withImages });
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Failed to draft campaign";

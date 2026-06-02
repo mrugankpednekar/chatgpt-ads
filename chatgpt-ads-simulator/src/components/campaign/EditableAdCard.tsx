@@ -25,6 +25,7 @@ export function EditableAdCard({
 }: EditableAdCardProps) {
   const [expanded, setExpanded] = useState(defaultExpanded);
   const displayName = ad.creative_angle.trim() || ad.title.trim() || "Untitled ad";
+  const imageSrc = ad.image_url?.trim();
 
   return (
     <div className="rounded-md border border-zinc-200 bg-white">
@@ -38,6 +39,16 @@ export function EditableAdCard({
             <ChevronDown className="size-4 shrink-0 text-zinc-400" />
           ) : (
             <ChevronRight className="size-4 shrink-0 text-zinc-400" />
+          )}
+          {imageSrc ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={imageSrc}
+              alt=""
+              className="size-10 shrink-0 rounded-md border border-zinc-200 bg-zinc-50 object-cover"
+            />
+          ) : (
+            <div className="size-10 shrink-0 rounded-md border border-dashed border-zinc-200 bg-zinc-50" />
           )}
           <div className="min-w-0">
             <p className="truncate text-sm font-medium text-zinc-900">
@@ -102,6 +113,17 @@ export function EditableAdCard({
                 onChange({ ...ad, landing_page: e.target.value })
               }
               placeholder="https://example.com/page"
+              className="bg-white"
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label className="text-xs text-zinc-500">Image URL</Label>
+            <Input
+              value={ad.image_url ?? ""}
+              onChange={(e) =>
+                onChange({ ...ad, image_url: e.target.value })
+              }
+              placeholder="/creative-assets/ad_1.svg"
               className="bg-white"
             />
           </div>
