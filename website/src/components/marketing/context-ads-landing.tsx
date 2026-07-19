@@ -116,7 +116,20 @@ const CSS = `
   .ctx .cmp.win{color:var(--graphite);font-weight:600}
   .ctx .dot{width:14px;height:14px;border-radius:4px;background:var(--linen);border:1px solid var(--mist);flex:none}
   .ctx .cmp.win .dot{background:var(--signal);border-color:var(--signal)}
+  .ctx .ad.lead{width:330px;padding:16px;font-size:12.5px;z-index:4;box-shadow:rgba(0,0,0,.10) 0 2px 5px 0, rgba(0,0,0,.14) 0 16px 34px -8px}
+  .ctx .ad.lead .tag{font-size:11px;margin-bottom:12px}
+  .ctx .ad.lead .bubble{padding:9px 13px;margin-bottom:8px;max-width:92%}
+  .ctx .ad.lead .mini-prod{padding:9px 10px;margin-top:9px}
+  .ctx .ad.lead .mini-prod .thumb{width:44px;height:44px;border-radius:7px}
+  .ctx .ad.lead .pn{font-size:13.5px}
+  .ctx .ad.lead .pm{font-size:11.5px}
+  .ctx .ad.lead .spons{font-size:11px}
+  .ctx .ad.audio-lg{width:272px;padding:14px;z-index:3}
+  .ctx .ad.audio-lg .thumb{width:30px;height:30px;border-radius:6px;background-position:center;background-size:cover;background-repeat:no-repeat}
+  .ctx .ad.audio-lg .wave{height:30px}
+  .ctx .ad.audio-lg .pn{font-size:12.5px}
   @media(max-width:900px){.ctx .ad{display:none}.ctx .ad.keep{display:block;opacity:.55}}
+  @media(max-width:900px){.ctx .ad.lead{width:258px;font-size:11.5px;padding:12px}.ctx .ad.audio-lg{width:232px;padding:12px}}
 
   .ctx section.band{padding-block:clamp(72px,11vh,120px)}
   .ctx .band.paper{background:var(--paper);border-block:1px solid var(--mist)}
@@ -172,75 +185,74 @@ const MARKUP = `
 
     <div class="band-mid">
       <div class="collage" aria-hidden="true">
-        <div class="ad keep" data-rot="-3" data-speed="0.06" style="left:8%;top:3%;width:230px;transform:rotate(-3deg)">
+        <div class="ad keep lead" data-rot="-3" data-speed="0.04" style="left:6%;top:4%;width:330px;transform:rotate(-3deg)">
           <div class="tag">ChatGPT</div>
           <div class="bubble user">best creatine for a beginner?</div>
-          <div class="bubble ai">Monohydrate is the most studied. A clean, third-party tested pick:</div>
-          <div class="mini-prod"><div class="thumb" style="background-image:url(/brand-assets/products/creatine.png)"></div><div><div class="pn">Thorne Creatine</div><div class="pm"><span class="spons">Sponsored</span> &middot; $32</div></div></div>
+          <div class="bubble ai">Monohydrate is the most studied and best value. A clean, third-party tested pick:</div>
+          <div class="mini-prod"><div class="thumb" style="background-image:url(/brand-assets/products/creatine.png)"></div><div><div class="pn">Volur Creatine</div><div class="pm"><span class="spons">Sponsored</span> &middot; $32 &middot; Third-party tested</div></div></div>
         </div>
         <div class="ad ad-web" data-rot="3" data-speed="0.13" style="left:62%;top:2%;width:226px;transform:rotate(3deg)">
           <div class="spons">Ad</div>
-          <div class="shot" style="height:70px;margin-top:6px;background-image:url(/brand-assets/products/vit-c.png)"></div>
+          <div class="shot" style="height:70px;margin-top:6px;background-image:url(/brand-assets/products/vitc.jpg)"></div>
           <div class="wt">The vitamin C serum dermatologists reach for</div>
-          <div class="url">glowlabs.com/serum</div>
+          <div class="url">veyda.com/serum</div>
           <div class="wd" style="margin-top:5px">Clinically tested brightening serum. Free shipping over $40.</div>
         </div>
         <div class="ad" data-rot="-2" data-speed="0.20" style="left:71%;top:26%;width:190px;transform:rotate(-2deg)">
           <div class="shot" style="height:66px;background-image:url(/brand-assets/products/hike.jpg)"></div>
-          <div class="pn">@northtrail</div>
+          <div class="pn">@northwend</div>
           <div class="pm" style="margin-top:3px"><span class="spons">Sponsored</span> &middot; Shop the look</div>
         </div>
-        <div class="ad" data-rot="2" data-speed="0.09" style="left:5.5%;top:29%;width:204px;transform:rotate(2deg)">
+        <div class="ad" data-rot="2" data-speed="0.09" style="left:5.5%;top:37%;width:204px;transform:rotate(2deg)">
           <div class="tag">Answer</div>
           <div class="pm" style="color:var(--charcoal)">Top pick for sensitive skin, from recent reviews:</div>
-          <div class="mini-prod"><div class="thumb" style="background-image:url(/brand-assets/products/cleanser.jpg)"></div><div><div class="pn">Vela Cleanser</div><div class="pm"><span class="spons">Sponsored</span> &middot; 4.8&#9733;</div></div></div>
+          <div class="mini-prod"><div class="thumb" style="background-image:url(/brand-assets/products/cleanser.jpg)"></div><div><div class="pn">Nell Cleanser</div><div class="pm"><span class="spons">Sponsored</span> &middot; 4.8&#9733;</div></div></div>
         </div>
         <div class="ad" data-rot="1" data-speed="0.16" style="left:9%;top:52%;width:172px;transform:rotate(1deg)">
-          <div class="tag">Chat</div>
+          <div class="tag">ChatGPT</div>
           <div class="bubble ai">Try a gel SPF. A top-rated one:</div>
-          <div class="mini-prod"><div class="thumb" style="background-image:url(/brand-assets/products/spf.jpeg)"></div><div><div class="pn">Bloom SPF 46</div><div class="pm"><span class="spons">Sponsored</span> &middot; Gel finish</div></div></div>
+          <div class="mini-prod"><div class="thumb" style="background-image:url(/brand-assets/products/spf.jpeg)"></div><div><div class="pn">Solva SPF 40</div><div class="pm"><span class="spons">Sponsored</span> &middot; Gel finish</div></div></div>
         </div>
-        <div class="ad" data-rot="-1" data-speed="0.19" style="left:69.5%;top:47%;width:176px;transform:rotate(-1deg)">
-          <div class="shot" style="height:60px;background-image:url(/brand-assets/products/shoes.png)"></div>
-          <div class="pn">Kestrel Runners</div>
-          <div class="pm" style="margin-top:3px">&#9733;&#9733;&#9733;&#9733;&#9734; &middot; $120 &middot; <span class="spons">Sponsored</span></div>
+        <div class="ad" data-rot="-1" data-speed="0.19" style="left:69%;top:45%;width:200px;transform:rotate(-1deg)">
+          <div class="tag">ChatGPT</div>
+          <div class="bubble ai">For easy first miles, a cushioned trainer:</div>
+          <div class="mini-prod"><div class="thumb" style="background-image:url(/brand-assets/products/shoes.png)"></div><div><div class="pn">Vantis Runners</div><div class="pm"><span class="spons">Sponsored</span> &middot; $120</div></div></div>
         </div>
-        <div class="ad keep" data-rot="2" data-speed="0.24" style="left:10.5%;top:66%;width:230px;transform:rotate(2deg)">
+        <div class="ad keep audio-lg" data-rot="2" data-speed="0.18" style="left:9.5%;top:66%;width:272px;transform:rotate(2deg)">
           <div class="tag">Audio</div>
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><div class="thumb" style="background-image:url(/brand-assets/products/oura.svg)"></div><div><div class="pn">Oura Ring</div><div class="pm" style="font-size:9.5px">Sponsored message</div></div></div>
-          <div class="pm">&ldquo;This episode is brought to you by Oura.&rdquo;</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><div class="thumb" style="background-color:#eef1ef;background-image:url(/brand-assets/products/sleep.jpg)"></div><div><div class="pn">Otava Sleep</div><div class="pm" style="font-size:9.5px">Sponsored message</div></div></div>
+          <div class="pm">&ldquo;This episode is brought to you by Otava.&rdquo;</div>
           <div class="wave"><span style="height:40%"></span><span style="height:70%"></span><span style="height:100%"></span><span style="height:55%"></span><span style="height:85%"></span><span style="height:35%"></span><span style="height:65%"></span><span style="height:95%"></span><span style="height:45%"></span><span style="height:75%"></span><span style="height:50%"></span><span style="height:30%"></span></div>
           <div class="audio-ctrl"><span class="play">&#9654;</span><span class="rail"></span><span class="pm">0:15</span></div>
         </div>
         <div class="ad" data-rot="-3" data-speed="0.16" style="left:72.5%;top:60%;width:186px;transform:rotate(-3deg)">
           <div class="shot" style="background-image:url(/brand-assets/products/moisturizer.jpg)"></div>
-          <div class="pn">Aere Daily Moisturizer</div>
+          <div class="pn">Oona Daily Moisturizer</div>
           <div class="pm" style="margin-top:3px">&#9733;&#9733;&#9733;&#9733;&#9733; &middot; $48 &middot; <span class="spons">Sponsored</span></div>
         </div>
         <div class="ad" data-rot="-2" data-speed="0.12" style="left:6.5%;top:84%;width:210px;transform:rotate(-2deg)">
           <div class="tag">Answer</div>
           <div class="shot" style="height:56px;margin-bottom:8px;background-image:url(/brand-assets/products/mattress.jpg)"></div>
-          <div class="cmp win"><span><span class="dot" style="display:inline-block;vertical-align:-2px;margin-right:6px"></span>Nord Mattress</span><span class="pm" style="color:var(--signal)">Ad</span></div>
+          <div class="cmp win"><span><span class="dot" style="display:inline-block;vertical-align:-2px;margin-right:6px"></span>Torva Mattress</span><span class="pm" style="color:var(--signal)">Ad</span></div>
           <div class="cmp"><span><span class="dot" style="display:inline-block;vertical-align:-2px;margin-right:6px"></span>Option B</span><span class="pm">4.4&#9733;</span></div>
           <div class="cmp"><span><span class="dot" style="display:inline-block;vertical-align:-2px;margin-right:6px"></span>Option C</span><span class="pm">4.2&#9733;</span></div>
         </div>
-        <div class="ad ad-voice" data-rot="3" data-speed="0.28" style="left:57%;top:82%;width:206px;transform:rotate(3deg)">
-          <div class="tag">Voice</div>
-          <div class="mic" aria-hidden="true">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#41a1cf" stroke-width="1.6" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v3"/></svg>
-          </div>
-          <div class="pn">&ldquo;Recommend a light daily moisturizer.&rdquo;</div>
-          <div class="mini-prod" style="margin-top:8px"><div class="thumb" style="background-image:url(/brand-assets/products/lotion.png)"></div><div><div class="pn">Lys Daily Lotion</div><div class="pm"><span class="spons">Sponsored</span> &middot; read aloud</div></div></div>
+        <div class="ad audio-lg" data-rot="3" data-speed="0.28" style="left:57%;top:72%;width:236px;transform:rotate(3deg)">
+          <div class="tag">Audio</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><div class="thumb" style="background-image:url(/brand-assets/products/lotion.png)"></div><div><div class="pn">Ovie Daily Lotion</div><div class="pm" style="font-size:9.5px">Sponsored message</div></div></div>
+          <div class="pm">&ldquo;A light daily moisturizer we love &mdash; Ovie.&rdquo;</div>
+          <div class="wave"><span style="height:45%"></span><span style="height:75%"></span><span style="height:95%"></span><span style="height:50%"></span><span style="height:80%"></span><span style="height:35%"></span><span style="height:70%"></span><span style="height:90%"></span><span style="height:40%"></span><span style="height:65%"></span><span style="height:55%"></span><span style="height:30%"></span></div>
+          <div class="audio-ctrl"><span class="play">&#9654;</span><span class="rail"></span><span class="pm">0:15</span></div>
         </div>
         <div class="ad ad-web" data-rot="1.5" data-speed="0.07" style="left:38%;top:-3%;width:196px;transform:rotate(1.5deg)">
           <div class="spons">Ad</div>
-          <div class="shot" style="height:64px;margin-top:6px;background-image:url(/brand-assets/products/blue-apron-box.png)"></div>
+          <div class="shot" style="height:64px;margin-top:6px;background-image:url(/brand-assets/products/meal_box.jpg)"></div>
           <div class="wt">Meal kits, ready in 15 minutes</div>
-          <div class="url">freshcrate.com</div>
+          <div class="url">gatherbox.com</div>
         </div>
         <div class="ad" data-rot="-2" data-speed="0.22" style="left:41%;top:88%;width:188px;transform:rotate(-2deg)">
           <div class="shot" style="height:58px;background-image:url(/brand-assets/products/lamp.jpg)"></div>
-          <div class="pn">Lumen Desk Lamp</div>
+          <div class="pn">Tave Desk Lamp</div>
           <div class="pm" style="margin-top:3px">$89 &middot; <span class="spons">Sponsored</span></div>
         </div>
       </div>
