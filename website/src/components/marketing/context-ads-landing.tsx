@@ -320,8 +320,8 @@ const MARKUP = `
     <div>
       <p class="lede reveal">Tell us what you sell. We'll show you what the AI surfaces can do for it.</p>
       <div class="actions mt-l reveal">
-        <a href="mailto:hello@getcontextads.com?subject=Book%20a%20demo" class="btn btn-signal">Book a demo <span class="arrowc">&rarr;</span></a>
-        <a href="mailto:hello@getcontextads.com?subject=Early%20access" class="btn btn-outline">Apply for early access <span class="arrowc">&rarr;</span></a>
+        <a href="mailto:hi@getcontextads.com?subject=Book%20a%20demo" class="btn btn-signal">Book a demo <span class="arrowc">&rarr;</span></a>
+        <a href="mailto:hi@getcontextads.com?subject=Early%20access" class="btn btn-outline">Apply for early access <span class="arrowc">&rarr;</span></a>
       </div>
     </div>
   </div>
@@ -337,10 +337,10 @@ const MARKUP = `
           Context&nbsp;Ads
         </div>
         <p>Ads for the AI era. Built out of MIT.</p>
-        <a href="mailto:hello@getcontextads.com" class="btn btn-dark">hello@getcontextads.com</a>
+        <a href="mailto:hi@getcontextads.com" class="btn btn-dark">hi@getcontextads.com</a>
       </div>
       <div class="foot-col"><h4>Company</h4><a href="#approach">Approach</a><a href="#model">The Model</a><a href="#contact">Early access</a></div>
-      <div class="foot-col"><h4>Get started</h4><a href="#contact">Book a demo</a><a href="mailto:hello@getcontextads.com">Contact</a></div>
+      <div class="foot-col"><h4>Get started</h4><a href="#contact">Book a demo</a><a href="mailto:hi@getcontextads.com">Contact</a></div>
     </div>
     <p class="foot-src">Sources. ChatGPT weekly users: OpenAI, via TechCrunch, 2026. AI-shopper conversion, across AI surfaces and not ChatGPT alone: Adobe Analytics, 2026.</p>
     <div class="foot-bottom"><span>&copy; 2026 Context Ads. getcontextads.com</span><span>Cambridge, Massachusetts</span></div>
