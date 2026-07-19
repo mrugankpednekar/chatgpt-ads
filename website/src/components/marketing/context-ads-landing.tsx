@@ -72,7 +72,7 @@ const CSS = `
   .ctx .mitmark{font-weight:700;letter-spacing:.06em;color:var(--mit);font-size:13px}
   .ctx .frame-hero .actions{margin-top:30px;justify-content:center}
 
-  .ctx .frame-stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--twilight)}
+  .ctx .frame-stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--twilight)}
   .ctx .frame-stats .cell{padding:20px 16px;border-left:1px solid var(--mist);text-align:center}
   .ctx .frame-stats .cell:first-child{border-left:none}
   .ctx .frame-stats .fig{font-family:var(--serif);font-size:clamp(24px,2.6vw,32px);line-height:1;letter-spacing:-.02em;color:var(--graphite);font-variant-numeric:tabular-nums}
@@ -81,9 +81,9 @@ const CSS = `
   .ctx .frame-niche .cell{padding:15px 12px;border-left:1px solid var(--mist);text-align:center;font-size:13px;font-weight:500;color:var(--charcoal)}
   .ctx .frame-niche .cell:first-child{border-left:none}
   @media(max-width:760px){
-    .ctx .frame-stats{grid-template-columns:repeat(2,1fr)}
-    .ctx .frame-stats .cell:nth-child(3){border-left:none}
-    .ctx .frame-stats .cell:nth-child(3),.ctx .frame-stats .cell:nth-child(4){border-top:1px solid var(--mist)}
+    .ctx .frame-stats{grid-template-columns:1fr}
+    .ctx .frame-stats .cell{border-left:none;border-top:1px solid var(--mist)}
+    .ctx .frame-stats .cell:first-child{border-top:none}
     .ctx .frame-niche{grid-template-columns:repeat(2,1fr)}
     .ctx .frame-niche .cell{border-top:1px solid var(--mist)}
     .ctx .frame-niche .cell:nth-child(odd){border-left:none}
@@ -146,6 +146,13 @@ const CSS = `
   .ctx .foot-col a{display:block;font-size:16px;color:var(--charcoal);padding:5px 0;transition:color .2s}
   .ctx .foot-col a:hover{color:var(--twilight)}
   .ctx .foot-bottom{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:52px;padding-top:22px;border-top:1px solid var(--mist);font-size:13px;color:var(--ash)}
+  .ctx .facts{margin-top:28px}
+  .ctx .factrow{display:grid;grid-template-columns:auto 1fr;gap:18px;padding:16px 0;border-top:1px solid var(--mist);align-items:baseline}
+  .ctx .factrow:last-child{border-bottom:1px solid var(--mist)}
+  .ctx .factrow .scope{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--signal);white-space:nowrap}
+  .ctx .factrow p{margin:0;font-size:16px;color:var(--graphite);line-height:1.45}
+  @media(max-width:480px){.ctx .factrow{grid-template-columns:1fr;gap:6px}}
+  .ctx .foot-src{font-size:12px;color:var(--fog);line-height:1.55;max-width:64ch;margin-top:44px}
   .ctx .reveal{opacity:0;transform:translateY(16px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
   .ctx .reveal.in{opacity:1;transform:none}
   @media(prefers-reduced-motion:reduce){.ctx .reveal{opacity:1;transform:none;transition:none}}
@@ -253,9 +260,8 @@ const MARKUP = `
     </div>
 
     <div class="frame-stats">
-      <div class="cell"><div class="fig">900M</div><div class="lab">Weekly AI users</div></div>
-      <div class="cell"><div class="fig">$100M</div><div class="lab">Ad revenue in 6 weeks</div></div>
-      <div class="cell"><div class="fig">44%</div><div class="lab">Retail-intent impressions</div></div>
+      <div class="cell"><div class="fig">900M</div><div class="lab">Weekly ChatGPT users</div></div>
+      <div class="cell"><div class="fig">+42%</div><div class="lab">AI shoppers convert vs. non-AI traffic</div></div>
       <div class="cell"><div class="fig">$0</div><div class="lab">Upfront. Pay on profit.</div></div>
     </div>
     <div class="frame-niche">
@@ -276,6 +282,22 @@ const MARKUP = `
     </div>
     <div>
       <p class="lede reveal">900 million people a week now ask instead of search. The answer is the new storefront. We put your brand beside it.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band paper" id="gap">
+  <div class="wrap split">
+    <div>
+      <span class="eyebrow reveal">The gap</span>
+      <h2 class="heading mt-m reveal">Everyone can buy AI ads now. Almost no one can prove they work.</h2>
+    </div>
+    <div class="reveal">
+      <p class="lede">In May 2026, ChatGPT dropped its ad minimum to zero. Anyone can advertise now. The catch is proof. That is exactly what we build.</p>
+      <div class="facts">
+        <div class="factrow"><span class="scope">On ChatGPT</span><p>Ads reach 900M weekly users. Yet click rates sit under 1%, and big brands report no measurable sales.</p></div>
+        <div class="factrow"><span class="scope">Across AI surfaces</span><p>AI shoppers convert 42% better than everyone else. The best buyers are already here. Almost no one is tracking them.</p></div>
+      </div>
     </div>
   </div>
 </section>
@@ -343,6 +365,7 @@ const MARKUP = `
       <div class="foot-col"><h4>Company</h4><a href="#approach">Approach</a><a href="#model">The Model</a><a href="#contact">Early access</a></div>
       <div class="foot-col"><h4>Get started</h4><a href="#contact">Book a demo</a><a href="mailto:hello@getcontextads.com">Contact</a></div>
     </div>
+    <p class="foot-src">Sources. ChatGPT weekly users and ad run-rate: OpenAI, via TechCrunch and eMarketer, 2026. ChatGPT click-through and advertiser results: eMarketer, 2026. AI-shopper conversion across all AI surfaces: Adobe Analytics, 2026. ChatGPT figures are specific to OpenAI. Conversion figures cover AI referral traffic across surfaces.</p>
     <div class="foot-bottom"><span>&copy; 2026 Context Ads. getcontextads.com</span><span>Cambridge, Massachusetts</span></div>
   </div>
 </footer>
