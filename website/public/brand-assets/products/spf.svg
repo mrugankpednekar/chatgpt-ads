@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400" fill="none">
+  <defs>
+    <linearGradient id="spbg" x1="0" y1="0" x2="0" y2="400" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#eef6f6"/><stop offset="1" stop-color="#d9ecec"/>
+    </linearGradient>
+    <linearGradient id="sptube" x1="150" y1="120" x2="250" y2="120" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f4fbfb"/><stop offset="0.5" stop-color="#dff0ef"/><stop offset="1" stop-color="#b9dad8"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#spbg)"/>
+  <ellipse cx="200" cy="342" rx="72" ry="14" fill="#1e5252" opacity="0.14"/>
+  <!-- cap -->
+  <rect x="164" y="72" width="72" height="40" rx="10" fill="#12a3a0"/>
+  <rect x="164" y="72" width="72" height="12" rx="6" fill="#ffffff" opacity="0.25"/>
+  <!-- tube body -->
+  <path d="M150 112h100v168c0 8-4 16-12 22l-8 6c-4 3-4 9 0 12l6 4H164l6-4c4-3 4-9 0-12l-8-6c-8-6-12-14-12-22z" fill="url(#sptube)"/>
+  <path d="M150 112h18v212h-4c-8-4-14-12-14-24z" fill="#ffffff" opacity="0.5"/>
+  <!-- crimp -->
+  <rect x="160" y="316" width="80" height="14" rx="4" fill="#bcdad8"/>
+  <line x1="176" y1="316" x2="176" y2="330" stroke="#9cc3c1" stroke-width="3"/>
+  <line x1="200" y1="316" x2="200" y2="330" stroke="#9cc3c1" stroke-width="3"/>
+  <line x1="224" y1="316" x2="224" y2="330" stroke="#9cc3c1" stroke-width="3"/>
+  <!-- sun mark + label -->
+  <circle cx="200" cy="170" r="20" fill="#f6b93b"/>
+  <g stroke="#f6b93b" stroke-width="5" stroke-linecap="round">
+    <path d="M200 138v-12M200 214v-12M170 170h-12M242 170h-12M178 148l-8-8M230 200l-8-8M222 148l8-8M178 192l-8 8"/>
+  </g>
+  <text x="200" y="242" text-anchor="middle" font-family="Georgia, serif" font-size="26" font-weight="700" fill="#0e6f6d">SPF</text>
+  <rect x="168" y="256" width="64" height="7" rx="3.5" fill="#7cb6b4"/>
+</svg>
