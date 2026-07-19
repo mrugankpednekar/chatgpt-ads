@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
-  <rect width="200" height="200" rx="16" fill="#FAFAFA"/>
-  <ellipse cx="100" cy="118" rx="52" ry="20" fill="#fff" stroke="#E4E4E7" stroke-width="2"/>
-  <rect x="68" y="68" width="64" height="52" rx="10" fill="#fff" stroke="#E4E4E7" stroke-width="2"/>
-  <circle cx="100" cy="88" r="14" fill="#FF6B9D" opacity="0.2"/>
-  <circle cx="100" cy="88" r="8" fill="#FF6B9D"/>
-  <text x="100" y="148" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#71717A">moisturizer</text>
-</svg>

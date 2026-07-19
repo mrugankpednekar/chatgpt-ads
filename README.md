@@ -1,18 +1,15 @@
 # ContextAds
 
-Single Next.js app in `website/` — marketing site, sign-in, and product workspace.
+Brand marketing site (static Next.js app) in `website/` — landing page, about, and methodology.
 
 ## Deploy (Vercel)
 
 - **Root directory:** `website`
 - **Production:** https://www.getcontextads.com
 
-Required environment variables (Production):
+Optional environment variable:
 
-- `AUTH_ALLOWED_EMAILS` — comma-separated allowed sign-in emails
-- `AUTH_PASSWORD` — shared password for those emails
-- `AUTH_SESSION_SECRET` — random string for session signing
-- `OPENAI_API_KEY` — optional; enables live AI drafting/simulation
+- `NEXT_PUBLIC_BOOK_DEMO_URL` — "Book a demo" CTA link (defaults to Calendly)
 
 ## Local development
 

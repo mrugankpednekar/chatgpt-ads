@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
-  <rect width="200" height="200" rx="16" fill="#FAFAFA"/>
-  <rect x="72" y="48" width="56" height="104" rx="8" fill="#fff" stroke="#E4E4E7" stroke-width="2"/>
-  <rect x="80" y="56" width="40" height="24" rx="4" fill="#FF6B9D" opacity="0.15"/>
-  <rect x="84" y="88" width="32" height="48" rx="4" fill="#F4F4F5"/>
-  <text x="100" y="72" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#FF6B9D" font-weight="600">bubble</text>
-  <ellipse cx="100" cy="168" rx="28" ry="6" fill="#E4E4E7" opacity="0.5"/>
-</svg>

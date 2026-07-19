@@ -1,5 +1,5 @@
-import { MarketingLandingPage } from "@/components/marketing/landing-page";
+import { ContextAdsLanding } from "@/components/marketing/context-ads-landing";
 
 export default function HomePage() {
-  return <MarketingLandingPage />;
+  return <ContextAdsLanding />;
 }
