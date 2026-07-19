@@ -8,22 +8,14 @@
 **/.env.test.local
 **/.env.production.local
 
-# Marketing site
-contextads-website/node_modules/
-contextads-website/.next/
-contextads-website/out/
-contextads-website/.vercel/
-contextads-website/*.tsbuildinfo
-contextads-website/next-env.d.ts
-
-# Next.js app
-chatgpt-ads-simulator/node_modules/
-chatgpt-ads-simulator/.next/
-chatgpt-ads-simulator/out/
-chatgpt-ads-simulator/build/
-chatgpt-ads-simulator/.vercel/
-chatgpt-ads-simulator/*.tsbuildinfo
-chatgpt-ads-simulator/next-env.d.ts
+# Website (Next.js app)
+website/node_modules/
+website/.next/
+website/out/
+website/build/
+website/.vercel/
+website/*.tsbuildinfo
+website/next-env.d.ts
 
 # Logs
 npm-debug.log*
@@ -32,10 +24,10 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # Local agent/IDE metadata
-chatgpt-ads-simulator/.agents/
-chatgpt-ads-simulator/.claude/
-chatgpt-ads-simulator/.codex/
-chatgpt-ads-simulator/.cursor/
+website/.agents/
+website/.claude/
+website/.codex/
+website/.cursor/
 
 # Scratch screenshots
-chatgpt-ads-simulator/tmp-product-demo-*.png
+website/tmp-product-demo-*.png

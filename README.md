@@ -1,10 +1,10 @@
 # ContextAds
 
-Single Next.js app in `chatgpt-ads-simulator/` — marketing site, sign-in, and product workspace.
+Single Next.js app in `website/` — marketing site, sign-in, and product workspace.
 
 ## Deploy (Vercel)
 
-- **Root directory:** `chatgpt-ads-simulator`
+- **Root directory:** `website`
 - **Production:** https://www.getcontextads.com
 
 Required environment variables (Production):
@@ -17,7 +17,7 @@ Required environment variables (Production):
 ## Local development
 
 ```bash
-cd chatgpt-ads-simulator
+cd website
 cp .env.local.example .env.local
 npm install
 npm run dev
