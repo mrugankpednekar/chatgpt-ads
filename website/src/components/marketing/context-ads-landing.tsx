@@ -146,12 +146,6 @@ const CSS = `
   .ctx .foot-col a{display:block;font-size:16px;color:var(--charcoal);padding:5px 0;transition:color .2s}
   .ctx .foot-col a:hover{color:var(--twilight)}
   .ctx .foot-bottom{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:52px;padding-top:22px;border-top:1px solid var(--mist);font-size:13px;color:var(--ash)}
-  .ctx .facts{margin-top:28px}
-  .ctx .factrow{display:grid;grid-template-columns:auto 1fr;gap:18px;padding:16px 0;border-top:1px solid var(--mist);align-items:baseline}
-  .ctx .factrow:last-child{border-bottom:1px solid var(--mist)}
-  .ctx .factrow .scope{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--signal);white-space:nowrap}
-  .ctx .factrow p{margin:0;font-size:16px;color:var(--graphite);line-height:1.45}
-  @media(max-width:480px){.ctx .factrow{grid-template-columns:1fr;gap:6px}}
   .ctx .foot-src{font-size:12px;color:var(--fog);line-height:1.55;max-width:64ch;margin-top:44px}
   .ctx .reveal{opacity:0;transform:translateY(16px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
   .ctx .reveal.in{opacity:1;transform:none}
@@ -277,8 +271,7 @@ const MARKUP = `
 <section class="band paper" id="shift">
   <div class="wrap split">
     <div>
-      <span class="eyebrow reveal">The shift</span>
-      <h2 class="heading-lg mt-m reveal">Search learned to <em>talk back.</em></h2>
+      <h2 class="heading-lg reveal">Search learned to <em>talk back.</em></h2>
     </div>
     <div>
       <p class="lede reveal">900 million people a week now ask instead of search. The answer is the new storefront. We put your brand beside it.</p>
@@ -286,27 +279,10 @@ const MARKUP = `
   </div>
 </section>
 
-<section class="band paper" id="gap">
-  <div class="wrap split">
-    <div>
-      <span class="eyebrow reveal">The gap</span>
-      <h2 class="heading mt-m reveal">Everyone can buy AI ads now. Almost no one can prove they work.</h2>
-    </div>
-    <div class="reveal">
-      <p class="lede">In May 2026, ChatGPT dropped its ad minimum to zero. Anyone can advertise now. The catch is proof. That is exactly what we build.</p>
-      <div class="facts">
-        <div class="factrow"><span class="scope">On ChatGPT</span><p>Ads reach 900M weekly users. Yet click rates sit under 1%, and big brands report no measurable sales.</p></div>
-        <div class="factrow"><span class="scope">Across AI surfaces</span><p>AI shoppers convert 42% better than everyone else. The best buyers are already here. Almost no one is tracking them.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section class="band" id="approach">
   <div class="wrap split">
     <div>
-      <span class="eyebrow reveal">What we do</span>
-      <h2 class="heading mt-m reveal">One team, from brief to profit.</h2>
+      <h2 class="heading reveal">One team, from brief to profit.</h2>
       <p class="lede mt-s reveal">We run the whole loop, so you don't have to.</p>
     </div>
     <div class="reveal">
@@ -325,8 +301,7 @@ const MARKUP = `
     <div class="vivid reveal">
       <canvas id="wash" aria-hidden="true"></canvas>
       <div class="v-inner">
-        <span class="eyebrow" style="color:rgba(255,255,255,.85)">The model</span>
-        <h2 class="heading-lg mt-m">We only earn when <em>you profit.</em></h2>
+        <h2 class="heading-lg">We only earn when <em>you profit.</em></h2>
         <p>We take a share of the upside we create. If it doesn't work, we don't get paid.</p>
         <div class="mt-l"><a href="#contact" class="btn btn-glass">Talk terms <span class="arrowc">&rarr;</span></a></div>
       </div>
@@ -337,8 +312,7 @@ const MARKUP = `
 <section class="band" id="contact">
   <div class="wrap split">
     <div>
-      <span class="eyebrow reveal">Early access</span>
-      <h2 class="heading-lg mt-m reveal">Be the first <em>in the room.</em></h2>
+      <h2 class="heading-lg reveal">Be the first <em>in the room.</em></h2>
     </div>
     <div>
       <p class="lede reveal">Tell us what you sell. We'll show you what the AI surfaces can do for it.</p>
@@ -365,7 +339,7 @@ const MARKUP = `
       <div class="foot-col"><h4>Company</h4><a href="#approach">Approach</a><a href="#model">The Model</a><a href="#contact">Early access</a></div>
       <div class="foot-col"><h4>Get started</h4><a href="#contact">Book a demo</a><a href="mailto:hello@getcontextads.com">Contact</a></div>
     </div>
-    <p class="foot-src">Sources. ChatGPT weekly users and ad run-rate: OpenAI, via TechCrunch and eMarketer, 2026. ChatGPT click-through and advertiser results: eMarketer, 2026. AI-shopper conversion across all AI surfaces: Adobe Analytics, 2026. ChatGPT figures are specific to OpenAI. Conversion figures cover AI referral traffic across surfaces.</p>
+    <p class="foot-src">Sources. ChatGPT weekly users: OpenAI, via TechCrunch, 2026. AI-shopper conversion, across AI surfaces and not ChatGPT alone: Adobe Analytics, 2026.</p>
     <div class="foot-bottom"><span>&copy; 2026 Context Ads. getcontextads.com</span><span>Cambridge, Massachusetts</span></div>
   </div>
 </footer>
