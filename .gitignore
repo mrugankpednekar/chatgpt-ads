@@ -8,6 +8,9 @@
 **/.env.test.local
 **/.env.production.local
 
+# Next.js build output (root and website)
+.next/
+
 # Website (Next.js app)
 website/node_modules/
 website/.next/
