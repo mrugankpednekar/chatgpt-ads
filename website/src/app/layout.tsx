@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 
@@ -14,6 +14,10 @@ export const metadata: Metadata = {
   title: "Context Ads — Ads for the AI Era",
   description:
     "We run, track, and optimize your ads on ChatGPT and the AI surfaces replacing search. End to end, paid on performance. Built by creators from MIT.",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#fefffc",
 };
 
 export default function RootLayout({

@@ -61,7 +61,7 @@ const CSS = `
   .ctx .frame-nav .cta:hover{background:rgba(65,161,207,.08)}
 
   .ctx .band-mid{position:relative;flex:1;min-height:340px;overflow:hidden;display:flex;align-items:center;justify-content:center}
-  .ctx .collage{position:absolute;inset:0;z-index:0}
+  .ctx .collage{position:absolute;inset:0;z-index:0;pointer-events:none}
   .ctx .collage::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(44% 50% at 50% 50%,rgba(254,255,252,.7) 0%,rgba(254,255,252,.24) 48%,rgba(254,255,252,0) 74%)}
   .ctx .frame-hero{position:relative;z-index:1;text-align:center;padding:10px 24px;max-width:840px}
   .ctx .frame-hero::before{content:"";position:absolute;inset:-46% -16%;z-index:-1;background:radial-gradient(52% 66% at 50% 50%,rgba(254,255,252,.94) 0%,rgba(254,255,252,.62) 40%,rgba(254,255,252,0) 72%)}
@@ -87,6 +87,7 @@ const CSS = `
     .ctx .frame-niche{grid-template-columns:repeat(2,1fr)}
     .ctx .frame-niche .cell{border-top:1px solid var(--mist)}
     .ctx .frame-niche .cell:nth-child(odd){border-left:none}
+    .ctx .frame-niche .cell:nth-child(5){grid-column:1 / -1}
   }
 
   .ctx .ad{position:absolute;background:var(--paper);border:1px solid var(--mist);border-radius:12px;box-shadow:var(--shadow-card);padding:12px;width:232px;font-size:11.5px;line-height:1.35;color:var(--charcoal);will-change:transform}
@@ -152,7 +153,7 @@ const CSS = `
   .ctx-footer{background:var(--paper);border-top:1px solid var(--mist);padding-block:clamp(56px,8vh,80px) 36px}
   .ctx .foot-state{font-family:var(--serif);font-size:clamp(27px,4vw,42px);line-height:1.12;letter-spacing:-.02em;color:var(--graphite);max-width:18ch}
   .ctx .foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:32px;margin-top:52px}
-  @media(max-width:720px){.ctx .foot-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:720px){.ctx .foot-grid{grid-template-columns:1fr 1fr}.ctx .colophon{grid-column:1 / -1}}
   .ctx .colophon .foot-name{font-family:var(--serif);font-size:20px;color:var(--graphite);display:flex;align-items:center;gap:8px;margin-bottom:12px}
   .ctx .colophon p{font-size:15px;color:var(--ash);line-height:1.5;margin:0 0 18px;max-width:30ch}
   .ctx .foot-col h4{font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:.02em;color:var(--ash);margin:0 0 14px}
@@ -163,6 +164,34 @@ const CSS = `
   .ctx .reveal{opacity:0;transform:translateY(16px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
   .ctx .reveal.in{opacity:1;transform:none}
   @media(prefers-reduced-motion:reduce){.ctx .reveal{opacity:1;transform:none;transition:none}}
+
+  @media(max-width:640px){
+    .ctx .brand{font-size:clamp(40px,12vw,58px)}
+    .ctx .band-mid{min-height:560px;padding:0}
+    .ctx .frame-hero{padding:6px 16px}
+    .ctx .frame-hero .actions{margin-top:24px}
+    .ctx .ad.keep{display:none}
+    .ctx .ad.m{display:block;opacity:.66;padding:10px;font-size:11px;box-shadow:rgba(0,0,0,.06) 0 1px 1px 0,rgba(0,0,0,.06) 0 4px 10px -2px}
+    .ctx .ad.m .tag{margin-bottom:7px}
+    .ctx .ad.m-tl{left:-5% !important;top:5% !important;width:162px !important;transform:rotate(-4deg) !important}
+    .ctx .ad.m-tr{left:60% !important;top:3% !important;width:150px !important;transform:rotate(4deg) !important}
+    .ctx .ad.m-tc{left:35% !important;top:-3% !important;width:140px !important;transform:rotate(2deg) !important;opacity:.5}
+    .ctx .ad.m-bl{left:-4% !important;top:84% !important;width:150px !important;transform:rotate(3deg) !important}
+    .ctx .ad.m-br{left:57% !important;top:82% !important;width:162px !important;transform:rotate(-3deg) !important}
+    .ctx .frame-nav{gap:2px;padding:10px 8px 14px}
+    .ctx .frame-nav a{padding:9px 12px}
+    .ctx .frame-nav .cta{padding:8px 8px 8px 12px}
+    .ctx .btn{padding:11px 14px 11px 18px}
+    .ctx .pill .cta{padding:8px 9px 8px 13px}
+    .ctx .foot-col a{padding:8px 0}
+    .ctx .foot-bottom{gap:8px}
+  }
+  @media(max-width:560px){
+    .ctx .frame-hero .actions{flex-direction:column;align-items:stretch;width:100%;max-width:320px;margin-inline:auto}
+    .ctx #contact .actions{flex-direction:column;align-items:stretch}
+    .ctx .frame-hero .actions .btn,
+    .ctx #contact .actions .btn{justify-content:center;padding-block:12px}
+  }
 `;
 
 const MARKUP = `
@@ -191,14 +220,14 @@ const MARKUP = `
           <div class="bubble ai">Monohydrate is the most studied and best value. A clean, third-party tested pick:</div>
           <div class="mini-prod"><div class="thumb" style="background-image:url(/brand-assets/products/creatine.png)"></div><div><div class="pn">Volur Creatine</div><div class="pm"><span class="spons">Sponsored</span> &middot; $32 &middot; Third-party tested</div></div></div>
         </div>
-        <div class="ad ad-web" data-rot="3" data-speed="0.13" style="left:62%;top:2%;width:226px;transform:rotate(3deg)">
+        <div class="ad ad-web m m-tc" data-rot="3" data-speed="0.13" style="left:62%;top:2%;width:226px;transform:rotate(3deg)">
           <div class="spons">Ad</div>
           <div class="shot" style="height:70px;margin-top:6px;background-image:url(/brand-assets/products/vitc.jpg)"></div>
           <div class="wt">The vitamin C serum dermatologists reach for</div>
           <div class="url">veyda.com/serum</div>
           <div class="wd" style="margin-top:5px">Clinically tested brightening serum. Free shipping over $40.</div>
         </div>
-        <div class="ad" data-rot="-2" data-speed="0.20" style="left:71%;top:26%;width:190px;transform:rotate(-2deg)">
+        <div class="ad m m-tr" data-rot="-2" data-speed="0.20" style="left:71%;top:26%;width:190px;transform:rotate(-2deg)">
           <div class="shot" style="height:66px;background-image:url(/brand-assets/products/hike.jpg)"></div>
           <div class="pn">@northwend</div>
           <div class="pm" style="margin-top:3px"><span class="spons">Sponsored</span> &middot; Shop the look</div>
@@ -208,12 +237,12 @@ const MARKUP = `
           <div class="pm" style="color:var(--charcoal)">Top pick for sensitive skin, from recent reviews:</div>
           <div class="mini-prod"><div class="thumb" style="background-image:url(/brand-assets/products/cleanser.jpg)"></div><div><div class="pn">Nell Cleanser</div><div class="pm"><span class="spons">Sponsored</span> &middot; 4.8&#9733;</div></div></div>
         </div>
-        <div class="ad" data-rot="1" data-speed="0.16" style="left:9%;top:52%;width:172px;transform:rotate(1deg)">
+        <div class="ad m m-tl" data-rot="1" data-speed="0.16" style="left:9%;top:52%;width:172px;transform:rotate(1deg)">
           <div class="tag">ChatGPT</div>
           <div class="bubble ai">Try a gel SPF. A top-rated one:</div>
           <div class="mini-prod"><div class="thumb" style="background-image:url(/brand-assets/products/spf.jpeg)"></div><div><div class="pn">Solva SPF 40</div><div class="pm"><span class="spons">Sponsored</span> &middot; Gel finish</div></div></div>
         </div>
-        <div class="ad" data-rot="-1" data-speed="0.19" style="left:69%;top:45%;width:200px;transform:rotate(-1deg)">
+        <div class="ad m m-br" data-rot="-1" data-speed="0.19" style="left:69%;top:45%;width:200px;transform:rotate(-1deg)">
           <div class="tag">ChatGPT</div>
           <div class="bubble ai">For easy first miles, a cushioned trainer:</div>
           <div class="mini-prod"><div class="thumb" style="background-image:url(/brand-assets/products/shoes.png)"></div><div><div class="pn">Vantis Runners</div><div class="pm"><span class="spons">Sponsored</span> &middot; $120</div></div></div>
@@ -225,7 +254,7 @@ const MARKUP = `
           <div class="wave"><span style="height:40%"></span><span style="height:70%"></span><span style="height:100%"></span><span style="height:55%"></span><span style="height:85%"></span><span style="height:35%"></span><span style="height:65%"></span><span style="height:95%"></span><span style="height:45%"></span><span style="height:75%"></span><span style="height:50%"></span><span style="height:30%"></span></div>
           <div class="audio-ctrl"><span class="play">&#9654;</span><span class="rail"></span><span class="pm">0:15</span></div>
         </div>
-        <div class="ad" data-rot="-3" data-speed="0.16" style="left:72.5%;top:60%;width:186px;transform:rotate(-3deg)">
+        <div class="ad m m-bl" data-rot="-3" data-speed="0.16" style="left:72.5%;top:60%;width:186px;transform:rotate(-3deg)">
           <div class="shot" style="background-image:url(/brand-assets/products/moisturizer.jpg)"></div>
           <div class="pn">Oona Daily Moisturizer</div>
           <div class="pm" style="margin-top:3px">&#9733;&#9733;&#9733;&#9733;&#9733; &middot; $48 &middot; <span class="spons">Sponsored</span></div>
@@ -395,7 +424,7 @@ export function ContextAdsLanding() {
     const frame = () => {
       const y = window.scrollY;
       if (pill) pill.classList.toggle("show", y > window.innerHeight * 0.72);
-      if (!reduce) {
+      if (!reduce && window.innerWidth > 640) {
         for (const el of ads) {
           const sp = parseFloat(el.getAttribute("data-speed") || "0") || 0;
           const rot = el.getAttribute("data-rot") || "0";
