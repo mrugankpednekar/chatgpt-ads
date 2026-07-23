@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 
 import { AppProviders } from "@/components/layout/AppProviders";
+import { OaiqPixel } from "@/components/analytics/oaiq-pixel";
 import "./globals.css";
 
 const inter = Inter({
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body className="min-h-full font-sans">
         <AppProviders>{children}</AppProviders>
         <Analytics />
+        <OaiqPixel />
       </body>
     </html>
   );

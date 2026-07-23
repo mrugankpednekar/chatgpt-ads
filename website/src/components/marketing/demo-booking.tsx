@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import Script from "next/script";
 import { track } from "@vercel/analytics";
 
+import { oaiqMeasure } from "@/components/analytics/oaiq-pixel";
+
 const CALENDLY_URL =
   process.env.NEXT_PUBLIC_BOOK_DEMO_URL ??
   "https://calendly.com/hi-getcontextads/30min";
@@ -56,6 +58,12 @@ export function DemoBooking() {
       }
       if (data.event === "calendly.event_scheduled") {
         track("demo_booked");
+        // OpenAI ads conversion: a demo booking is our completed sign-up action.
+        oaiqMeasure("registration_completed", {
+          type: "customer_action",
+          amount: 0,
+          currency: "USD",
+        });
       }
     }
 
